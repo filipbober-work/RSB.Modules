@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
+using NLog;
 using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
@@ -12,8 +13,10 @@ namespace RSB.Mail.Templater
 {
     class MailSender
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly MailSenderSettings _settings;
         //private readonly TemplateService _templateService;
+        // TODO: Inject IRazorEngineService or use Engine.Razor?
         private readonly IRazorEngineService _razor;
 
         public MailSender(MailSenderSettings settings/*, IRazorEngineService razor*/)
@@ -41,27 +44,20 @@ namespace RSB.Mail.Templater
                 IsPremiumUser = false
             };
 
-            var model2 = new UserModel
-            {
-                Name = "Nameless One2",
-                Email = "nameless@one.com2",
-                IsPremiumUser = false
-            };
-
             try
             {
+                Logger.Debug("Creating message body");
                 var body = CreateEmailBody(model);
+
+                Logger.Debug("Preparing to send mail");
                 await SendHtmlEmailAsync(body);
 
-                var body2 = CreateEmailBody(model2);
-                await SendHtmlEmailAsync(body2);
+                Logger.Debug("Mail sent");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error");
+                Logger.Error(ex);
             }
-
-
         }
 
         public async Task SendEmailAsync()
@@ -109,37 +105,18 @@ namespace RSB.Mail.Templater
 
         private string CreateEmailBody<T>(T mailMessage) where T : MailMessage
         {
-            //var config = new TemplateServiceConfiguration
-            //{
-            //    DisableTempFileLocking = true,
-            //    CachingProvider = new DefaultCachingProvider(t => { })
-            //};
-
-            //Engine.Razor = RazorEngineService.Create(config);
-            // Engine.Razor.AddTemplateAndCompile<UserModel>();
-            //if (!Engine.Razor.IsTemplateCached(
-
             // TODO: Inject path
             var templateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates");
             var templatePath = templateFolderPath + "\\WelcomeEmail.cshtml";
 
             // TODO: Ensure that key can be GetType.ToString - check for different MailMessage data
-            //_razor.RunCompile(templateFilePath, mailMessage.GetType(), mailMessage);
-
-            //var key = templatePath;//mailMessage.GetType().ToString();
             var key = mailMessage.GetType().ToString();
             var modelType = mailMessage.GetType();
             string emailHtmlBody;
             if (!_razor.IsTemplateCached(key, modelType))
-                //_razor.Compile(templatePath, key, modelType);
-                //emailHtmlBody = _razor.RunCompile(templatePath, key, null, mailMessage);
                 emailHtmlBody = _razor.RunCompile(File.ReadAllText(templatePath), key, null, mailMessage);
             else
                 emailHtmlBody = _razor.Run(key, modelType, mailMessage);
-            //Engine.Razor.Compile(templatePath, mailMessage.GetType().ToString(), mailMessage.GetType());
-
-
-            //var emailHtmlBody = _templateService.Parse(File.ReadAllText(templatePath), mailMessage, null, mailMessage.GetType().ToString());
 
             return emailHtmlBody;
         }

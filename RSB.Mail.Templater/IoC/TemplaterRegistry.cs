@@ -26,6 +26,17 @@ namespace RSB.Mail.Templater
                 //RabbitMqTransportSettings.FromConfigurationFile()
             ))).Singleton();
 
+            For<MailSenderSettings>().Use(
+                new MailSenderSettings
+                {
+                    Hostname = Properties.Settings.Default.SenderHostname,
+                    HostAddress = Properties.Settings.Default.SenderAddress,
+                    Port = Properties.Settings.Default.SenderPort,
+                    Username = Properties.Settings.Default.SenderUsername,
+                    Password = Properties.Settings.Default.SenderPassword
+                }
+            );
+
         }
     }
 }

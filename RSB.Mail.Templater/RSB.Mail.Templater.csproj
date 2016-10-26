@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MailSender.cs" />
+    <Compile Include="MailSenderSettings.cs" />
     <Compile Include="MailTemplaterService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

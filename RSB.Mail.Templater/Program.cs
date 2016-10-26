@@ -13,6 +13,8 @@ namespace RSB.Mail.Templater
 
         static void Main()
         {
+
+
             HostFactory.Run(x =>
             {
                 x.SetServiceName("RSB.Modules.Mail.Templater");

@@ -1,7 +1,6 @@
 ﻿using System;
 using NLog;
 using RSB.Interfaces;
-using RSB.Transports.RabbitMQ.Settings;
 using StructureMap;
 
 namespace RSB.Mail.Templater
@@ -22,8 +21,11 @@ namespace RSB.Mail.Templater
 
             // ---
             Logger.Debug("Senging message");
-            var mailSender = new MailSender();
-            mailSender.Test();
+            var mailSender = _container.GetInstance<MailSender>();
+
+            // TODO: Should Wait() be here or elsewhere?
+            mailSender.Test().Wait();
+
             Logger.Debug("Message sent");
             // ---
         }

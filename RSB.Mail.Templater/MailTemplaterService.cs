@@ -20,7 +20,7 @@ namespace RSB.Mail.Templater
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
 
             // ---
-            Logger.Debug("Senging message");
+            Logger.Debug("Sending message");
             var mailSender = _container.GetInstance<MailSender>();
 
             // TODO: Should Wait() be here or elsewhere?

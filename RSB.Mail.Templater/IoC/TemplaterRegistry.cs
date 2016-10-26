@@ -1,5 +1,9 @@
 ﻿using RabbitMQ.Client;
+using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 using RSB.Interfaces;
+using RSB.Mail.Templater.Models;
 using RSB.Transports.RabbitMQ;
 using StructureMap;
 
@@ -36,6 +40,13 @@ namespace RSB.Mail.Templater.IoC
                 }
             );
 
+            var config = new TemplateServiceConfiguration
+            {
+                DisableTempFileLocking = true,
+                CachingProvider = new DefaultCachingProvider(t => { }),
+                //BaseTemplateType = typeof(MailMessage)
+            };
+            For<IRazorEngineService>().Use( RazorEngineService.Create(config)).Singleton();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using NLog;
+using RSB.Mail.Templater.IoC;
 using RSB.Transports.RabbitMQ.Settings;
 using StructureMap;
 using Topshelf;

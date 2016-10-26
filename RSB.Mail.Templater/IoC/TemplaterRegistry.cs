@@ -1,10 +1,9 @@
 ﻿using RabbitMQ.Client;
 using RSB.Interfaces;
 using RSB.Transports.RabbitMQ;
-using RSB.Transports.RabbitMQ.Settings;
 using StructureMap;
 
-namespace RSB.Mail.Templater
+namespace RSB.Mail.Templater.IoC
 {
     class TemplaterRegistry : Registry
     {

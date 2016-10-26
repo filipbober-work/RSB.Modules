@@ -26,12 +26,9 @@ namespace RSB.Mail.Templater
                 IsPremiumUser = false
             };
 
-            var templateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates");
-            var templateFilePath = templateFolderPath + "\\WelcomeEmail.cshtml";
-            var templateService = new TemplateService();
-            var emailHtmlBody = templateService.Parse(File.ReadAllText(templateFilePath), model, null, null);
+            var body = CreateEmailBody(model);
 
-            await SendHtmlEmailAsync(emailHtmlBody);
+            await SendHtmlEmailAsync(body);
         }
 
         public async Task SendEmailAsync()
@@ -75,6 +72,18 @@ namespace RSB.Mail.Templater
 
             }
 
+        }
+
+        private string CreateEmailBody<T>(T mailMessage) where T : MailMessage
+        {
+            // TODO: Inject path
+            // TODO: Inject TemplateService as cache is per instance (use Singleton)
+            var templateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates");
+            var templateFilePath = templateFolderPath + "\\WelcomeEmail.cshtml";
+            var templateService = new TemplateService();
+            var emailHtmlBody = templateService.Parse(File.ReadAllText(templateFilePath), mailMessage, null, mailMessage.GetType().ToString());
+
+            return emailHtmlBody;
         }
 
     }

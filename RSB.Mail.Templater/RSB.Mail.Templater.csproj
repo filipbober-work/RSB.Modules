@@ -100,6 +100,7 @@
     <Compile Include="MailSender.cs" />
     <Compile Include="MailSenderSettings.cs" />
     <Compile Include="MailTemplaterService.cs" />
+    <Compile Include="Models\MailMessage.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +128,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Templates\" />

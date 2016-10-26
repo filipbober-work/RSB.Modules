@@ -19,6 +19,13 @@ namespace RSB.Mail.Templater
         public void Start()
         {
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
+
+            // ---
+            Logger.Debug("Senging message");
+            var mailSender = new MailSender();
+            mailSender.Test();
+            Logger.Debug("Message sent");
+            // ---
         }
 
         public void Stop()

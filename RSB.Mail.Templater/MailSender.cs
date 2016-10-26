@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
+using RazorEngine.Templating;
+using RSB.Mail.Templater.Models;
 
 namespace RSB.Mail.Templater
 {
@@ -15,7 +19,19 @@ namespace RSB.Mail.Templater
 
         public async Task Test()
         {
-            await SendEmailAsync();
+            var model = new UserModel
+            {
+                Name = "Nameless One",
+                Email = "nameless@one.com",
+                IsPremiumUser = false
+            };
+
+            var templateFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates");
+            var templateFilePath = templateFolderPath + "\\WelcomeEmail.cshtml";
+            var templateService = new TemplateService();
+            var emailHtmlBody = templateService.Parse(File.ReadAllText(templateFilePath), model, null, null);
+
+            await SendHtmlEmailAsync(emailHtmlBody);
         }
 
         public async Task SendEmailAsync()
@@ -25,7 +41,30 @@ namespace RSB.Mail.Templater
             message.From.Add(new MailboxAddress("FxOnUs Mail From", _settings.HostAddress));
             message.To.Add(new MailboxAddress("FxOnUs Mail To", "fxonus.mail@gmail.com"));
             message.Subject = "Return to sender";
-            message.Body = new TextPart("plain") {Text = @"Returning to sender!"};
+            message.Body = new TextPart("plain") { Text = @"Returning to sender!" };
+
+            using (var client = new SmtpClient())
+            {
+                await client.ConnectAsync(_settings.Hostname, _settings.Port);
+                await client.AuthenticateAsync(_settings.Username, _settings.Password);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
+
+            }
+
+        }
+
+        public async Task SendHtmlEmailAsync(string htmlBody)
+        {
+            var message = new MimeMessage();
+
+            message.From.Add(new MailboxAddress("FxOnUs Mail From", _settings.HostAddress));
+            message.To.Add(new MailboxAddress("FxOnUs Mail To", "fxonus.mail@gmail.com"));
+            message.Subject = "Return to sender";
+
+            var builder = new BodyBuilder();
+            builder.HtmlBody = string.Format(htmlBody);
+            message.Body = builder.ToMessageBody();
 
             using (var client = new SmtpClient())
             {

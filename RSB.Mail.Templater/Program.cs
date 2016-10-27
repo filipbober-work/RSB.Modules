@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NLog;
 using RSB.Mail.Templater.IoC;
 using RSB.Transports.RabbitMQ.Settings;
@@ -14,8 +15,6 @@ namespace RSB.Mail.Templater
 
         static void Main()
         {
-
-
             HostFactory.Run(x =>
             {
                 x.SetServiceName("RSB.Modules.Mail.Templater");
@@ -30,7 +29,7 @@ namespace RSB.Mail.Templater
                 {
                     service.ConstructUsing(srv => InitializeTemplaterService());
 
-                    service.WhenStarted(srv => srv.Start());
+                    service.WhenStarted(async srv => await srv.Start());
                     service.WhenStopped(srv => srv.Stop());
                 });
             });

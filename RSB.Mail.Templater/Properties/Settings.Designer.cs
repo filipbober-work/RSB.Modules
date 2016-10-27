@@ -103,5 +103,14 @@ namespace RSB.Mail.Templater.Properties {
                 return ((int)(this["SenderPort"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("EmailTemplates")]
+        public string TemplatesPath {
+            get {
+                return ((string)(this["TemplatesPath"]));
+            }
+        }
     }
 }

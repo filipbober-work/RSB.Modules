@@ -1,9 +1,5 @@
 ﻿using RabbitMQ.Client;
-using RazorEngine;
-using RazorEngine.Configuration;
-using RazorEngine.Templating;
 using RSB.Interfaces;
-using RSB.Mail.Templater.Models;
 using RSB.Transports.RabbitMQ;
 using StructureMap;
 
@@ -29,24 +25,29 @@ namespace RSB.Mail.Templater.IoC
                 //RabbitMqTransportSettings.FromConfigurationFile()
             ))).Singleton();
 
-            For<MailSenderSettings>().Use(
-                new MailSenderSettings
+            //For<MailSenderSettings>().Use(
+            //    new MailSenderSettings
+            //    {
+            //        TemplatesPath = Properties.Settings.Default.TemplatesPath,
+            //        Hostname = Properties.Settings.Default.SenderHostname,
+            //        HostAddress = Properties.Settings.Default.SenderAddress,
+            //        Port = Properties.Settings.Default.SenderPort,
+            //        Username = Properties.Settings.Default.SenderUsername,
+            //        Password = Properties.Settings.Default.SenderPassword
+            //    }
+            //);
+
+            For<MailSender>().Use(
+                new MailSender(new MailSenderSettings
                 {
+                    TemplatesPath = Properties.Settings.Default.TemplatesPath,
                     Hostname = Properties.Settings.Default.SenderHostname,
                     HostAddress = Properties.Settings.Default.SenderAddress,
                     Port = Properties.Settings.Default.SenderPort,
                     Username = Properties.Settings.Default.SenderUsername,
                     Password = Properties.Settings.Default.SenderPassword
-                }
-            );
+                })).Singleton();
 
-            var config = new TemplateServiceConfiguration
-            {
-                DisableTempFileLocking = true,
-                CachingProvider = new DefaultCachingProvider(t => { }),
-                //BaseTemplateType = typeof(MailMessage)
-            };
-            For<IRazorEngineService>().Use( RazorEngineService.Create(config)).Singleton();
         }
     }
 }

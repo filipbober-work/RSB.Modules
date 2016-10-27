@@ -2,6 +2,7 @@
 {
     public class MailSenderSettings
     {
+        public string TemplatesPath { get; set; }
         public string Hostname { get; set; }
         public string HostAddress { get; set; }
         public int Port { get; set; }

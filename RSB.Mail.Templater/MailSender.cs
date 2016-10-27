@@ -10,7 +10,7 @@ using RSB.Mail.Templater.Models;
 
 namespace RSB.Mail.Templater
 {
-    class MailSender
+    public class MailSender
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

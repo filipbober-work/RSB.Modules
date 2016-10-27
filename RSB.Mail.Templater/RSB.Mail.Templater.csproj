@@ -97,6 +97,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MailManager.cs" />
+    <Compile Include="MailManagerSettings.cs" />
     <Compile Include="MailSender.cs" />
     <Compile Include="MailSenderSettings.cs" />
     <Compile Include="MailTemplaterService.cs" />

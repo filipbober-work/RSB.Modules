@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using NLog;
 using RSB.Interfaces;
+using RSB.Mail.Templater.Models;
 using StructureMap;
 
 namespace RSB.Mail.Templater
@@ -20,6 +21,8 @@ namespace RSB.Mail.Templater
         {
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
             var mailSender = _container.GetInstance<MailSender>();
+
+            AddTemplates(mailSender);
 
             Logger.Debug("Sending message");
             try
@@ -45,6 +48,11 @@ namespace RSB.Mail.Templater
             Logger.Info("Stopping {0}", nameof(MailTemplaterService));
 
             GC.SuppressFinalize(this);
+        }
+
+        private static void AddTemplates(MailSender mailSender)
+        {
+            mailSender.AddTemplate<SendUserRegisteredMail>();
         }
 
     }

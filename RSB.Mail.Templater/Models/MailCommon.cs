@@ -1,11 +1,12 @@
-﻿namespace RSB.Mail.Templater.Models
+using System.Collections.Generic;
+
+namespace RSB.Mail.Templater.Models
 {
-    public class MailMessage
+    public class MailProperties
     {
         public string FromMail { get; set; }
         public string FromName { get; set; }
-        public string ToMail { get; set; }
-        public string ToName { get; set; }
+        public List<Recipient> Recipients { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
     }

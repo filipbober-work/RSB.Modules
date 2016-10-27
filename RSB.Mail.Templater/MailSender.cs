@@ -29,19 +29,35 @@ namespace RSB.Mail.Templater
 
             RazorEngineService.Create(config);
 
-            AddTemplateAndCompile<UserModel>(_settings.TemplatesPath);
+            //AddTemplateAndCompile<UserModel>(_settings.TemplatesPath);
 
+        }
+
+        public void AddTemplate<T>() where T : IMailMessage
+        {
+            //AddTemplateAndCompile<T>(_settings.TemplatesPath);
+            //AddTemplateAndCompile<SendUserRegisteredMail>(_settings.TemplatesPath);
+            AddTemplateAndCompile<T>(_settings.TemplatesPath);
         }
 
         public async Task Test()
         {
-            var model = new UserModel
+            var model = new SendUserRegisteredMail
             {
-                FromMail = _settings.HostAddress,
-                FromName = _settings.Hostname,
-                ToMail = "fxonus.mail@gmail.com",
-                ToName = "Nameless One",
-                Subject = "Return to sender",
+                Properties = new MailProperties
+                {
+                    FromMail = _settings.HostAddress,
+                    FromName = _settings.Hostname,
+                    Recipients = new System.Collections.Generic.List<Recipient>
+                {
+                    new Recipient
+                    {
+                        ToMail = "fxonus.mail@gmail.com",
+                        ToName = "Nameless One"
+                    }
+},
+                    Subject = "Return to sender"
+                },
 
                 Name = "Nameless One",
                 Email = "nameless@one.com",
@@ -49,7 +65,7 @@ namespace RSB.Mail.Templater
             };
 
             Logger.Debug("Creating message body");
-            model.Body = CreateEmailBody(model);
+            model.Properties.Body = CreateEmailBody(model);
 
             Logger.Debug("Preparing to send mail");
             await SendHtmlEmailAsync(model);
@@ -57,36 +73,39 @@ namespace RSB.Mail.Templater
             Logger.Debug("Mail sent");
         }
 
-        public async Task SendHtmlEmailAsync(MailMessage email)
+        public async Task SendHtmlEmailAsync(IMailMessage email)
         {
             var message = new MimeMessage();
 
-            message.From.Add(new MailboxAddress(email.FromName, email.FromMail));
-            message.To.Add(new MailboxAddress(email.ToName, email.ToMail));
-            message.Subject = email.Subject;
-
-            var builder = new BodyBuilder();
-            builder.HtmlBody = string.Format(email.Body);
-            message.Body = builder.ToMessageBody();
-
-            using (var client = new SmtpClient())
+            foreach (var recipient in email.Properties.Recipients)
             {
-                await client.ConnectAsync(_settings.Hostname, _settings.Port);
-                await client.AuthenticateAsync(_settings.Username, _settings.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                message.From.Add(new MailboxAddress(email.Properties.FromName, email.Properties.FromMail));
+                message.To.Add(new MailboxAddress(recipient.ToName, recipient.ToMail));
+                message.Subject = email.Properties.Subject;
 
+                var builder = new BodyBuilder();
+                builder.HtmlBody = string.Format(email.Properties.Body);
+                message.Body = builder.ToMessageBody();
+
+                using (var client = new SmtpClient())
+                {
+                    await client.ConnectAsync(_settings.Hostname, _settings.Port);
+                    await client.AuthenticateAsync(_settings.Username, _settings.Password);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+
+                }
             }
 
         }
 
-        private string CreateEmailBody<T>(T mailMessage) where T : MailMessage
+        private static string CreateEmailBody<T>(T mailMessage) where T : IMailMessage
         {
             var typeName = typeof(T).Name;
             return Engine.Razor.RunCompile(typeName, mailMessage.GetType(), mailMessage);
         }
 
-        private void AddTemplateAndCompile<T>(string templatesPath) where T : MailMessage
+        private void AddTemplateAndCompile<T>(string templatesPath) where T : IMailMessage
         {
             var typeName = typeof(T).Name;
             var templatePath = Path.Combine(templatesPath, typeName) + ".cshtml";

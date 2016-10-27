@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
@@ -28,52 +27,24 @@ namespace RSB.Mail.Templater
             };
 
             RazorEngineService.Create(config);
-
-            //AddTemplateAndCompile<UserModel>(_settings.TemplatesPath);
-
         }
 
         public void AddTemplate<T>() where T : IMailMessage
         {
-            //AddTemplateAndCompile<T>(_settings.TemplatesPath);
-            //AddTemplateAndCompile<SendUserRegisteredMail>(_settings.TemplatesPath);
             AddTemplateAndCompile<T>(_settings.TemplatesPath);
         }
 
-        public async Task Test()
+        public async Task SendEmailAsync(IMailMessage message)
         {
-            var model = new SendUserRegisteredMail
-            {
-                Properties = new MailProperties
-                {
-                    FromMail = _settings.HostAddress,
-                    FromName = _settings.Hostname,
-                    Recipients = new System.Collections.Generic.List<Recipient>
-                {
-                    new Recipient
-                    {
-                        ToMail = "fxonus.mail@gmail.com",
-                        ToName = "Nameless One"
-                    }
-},
-                    Subject = "Return to sender"
-                },
-
-                Name = "Nameless One",
-                Email = "nameless@one.com",
-                IsPremiumUser = false
-            };
-
             Logger.Debug("Creating message body");
-            model.Properties.Body = CreateEmailBody(model);
+            message.Properties.Body = CreateEmailBody(message);
+            Logger.Debug("Sending email");
+            await SendSmtpEmailAsync(message);
 
-            Logger.Debug("Preparing to send mail");
-            await SendHtmlEmailAsync(model);
-
-            Logger.Debug("Mail sent");
+            Logger.Debug("Email sent");
         }
 
-        public async Task SendHtmlEmailAsync(IMailMessage email)
+        private async Task SendSmtpEmailAsync(IMailMessage email)
         {
             var message = new MimeMessage();
 
@@ -93,7 +64,6 @@ namespace RSB.Mail.Templater
                     await client.AuthenticateAsync(_settings.Username, _settings.Password);
                     await client.SendAsync(message);
                     await client.DisconnectAsync(true);
-
                 }
             }
 
@@ -101,11 +71,11 @@ namespace RSB.Mail.Templater
 
         private static string CreateEmailBody<T>(T mailMessage) where T : IMailMessage
         {
-            var typeName = typeof(T).Name;
+            var typeName = mailMessage.GetType().Name;
             return Engine.Razor.RunCompile(typeName, mailMessage.GetType(), mailMessage);
         }
 
-        private void AddTemplateAndCompile<T>(string templatesPath) where T : IMailMessage
+        private static void AddTemplateAndCompile<T>(string templatesPath) where T : IMailMessage
         {
             var typeName = typeof(T).Name;
             var templatePath = Path.Combine(templatesPath, typeName) + ".cshtml";

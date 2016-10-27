@@ -27,7 +27,29 @@ namespace RSB.Mail.Templater
             Logger.Debug("Sending message");
             try
             {
-                await mailSender.Test();
+                var message = new SendUserRegisteredMail
+                {
+                    Properties = new MailProperties
+                    {
+                        FromMail = _settings.HostAddress,
+                        FromName = _settings.Hostname,
+                        Recipients = new System.Collections.Generic.List<Recipient>
+                    {
+                        new Recipient
+                        {
+                            ToMail = "fxonus.mail@gmail.com",
+                            ToName = "Nameless One"
+                        }
+                    },
+                        Subject = "Return to sender"
+                    },
+
+                    Name = "Nameless One",
+                    Email = "nameless@one.com",
+                    IsPremiumUser = false
+                };
+
+                await mailSender.SendEmailAsync(message);
             }
             catch (Exception ex)
             {

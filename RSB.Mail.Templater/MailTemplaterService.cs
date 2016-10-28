@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using NLog;
 using RSB.Interfaces;
-using RSB.Mail.Templater.Models;
 using StructureMap;
 
 namespace RSB.Mail.Templater
@@ -19,15 +17,12 @@ namespace RSB.Mail.Templater
             _container = container;
         }
 
-        public async Task Start()
+        public void Start()
         {
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
             _mailManager = _container.GetInstance<MailManager>();
-            //var mailSender = _container.GetInstance<MailSender>();
 
             _mailManager.Start();
-
-            await _mailManager.TestSendMail();
         }
 
         public void Stop()

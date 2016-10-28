@@ -36,13 +36,6 @@ namespace RSB.Mail.Templater.IoC
                 }
             );
 
-            For<MailManagerSettings>()
-                .Use(new MailManagerSettings
-                {
-                    Hostname = Properties.Settings.Default.SenderHostname,
-                    HostAddress = Properties.Settings.Default.SenderAddress
-                });
-
         }
     }
 }

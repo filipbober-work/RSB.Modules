@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using NLog;
 using RSB.Mail.Templater.IoC;
-using RSB.Transports.RabbitMQ.Settings;
 using StructureMap;
 using Topshelf;
 
@@ -29,7 +27,7 @@ namespace RSB.Mail.Templater
                 {
                     service.ConstructUsing(srv => InitializeTemplaterService());
 
-                    service.WhenStarted(async srv => await srv.Start());
+                    service.WhenStarted(srv => srv.Start());
                     service.WhenStopped(srv => srv.Stop());
                 });
             });

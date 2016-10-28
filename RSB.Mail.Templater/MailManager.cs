@@ -12,7 +12,9 @@ namespace RSB.Mail.Templater
 
         private readonly MailManagerSettings _settings;
         private readonly MailSender _mailSender;
-        private IBus _bus;
+        private readonly IBus _bus;
+
+        private bool _isInitialized;
 
         public MailManager(MailManagerSettings settings, MailSender mailSender, IBus bus)
         {
@@ -21,16 +23,37 @@ namespace RSB.Mail.Templater
             _bus = bus;
         }
 
-        public async Task Test()
+        public void Start()
+        {
+            if (_isInitialized)
+                return;
+
+            InitializeTemplates();
+
+            _isInitialized = true;
+        }
+
+        public async Task TestSendMail()
         {
             var message = CreateMessage();
 
             Logger.Debug("Sending message");
-            await SendEmail(message);
+            await SendEmailAsync(message);
             Logger.Debug("Message sent");
         }
 
-        private async Task SendEmail(IMailMessage message)
+        private void InitializeTemplates()
+        {
+            RegisterTemplate<SendUserRegisteredMail>();
+        }
+
+        private void RegisterTemplate<T>() where T : IMailMessage, new()
+        {
+            _mailSender.AddTemplate<T>();
+            _bus.RegisterAsyncQueueHandler<T>(msg => SendEmailAsync(msg));
+        }
+
+        private async Task SendEmailAsync(IMailMessage message)
         {
             try
             {

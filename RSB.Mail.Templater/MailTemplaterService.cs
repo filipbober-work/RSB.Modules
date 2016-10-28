@@ -23,10 +23,11 @@ namespace RSB.Mail.Templater
         {
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
             _mailManager = _container.GetInstance<MailManager>();
-            var mailSender = _container.GetInstance<MailSender>();
+            //var mailSender = _container.GetInstance<MailSender>();
 
-            AddTemplates(mailSender);
-            await _mailManager.Test();
+            _mailManager.Start();
+
+            await _mailManager.TestSendMail();
         }
 
         public void Stop()
@@ -40,11 +41,6 @@ namespace RSB.Mail.Templater
             Logger.Info("Stopping {0}", nameof(MailTemplaterService));
 
             GC.SuppressFinalize(this);
-        }
-
-        private static void AddTemplates(MailSender mailSender)
-        {
-            mailSender.AddTemplate<SendUserRegisteredMail>();
         }
 
     }

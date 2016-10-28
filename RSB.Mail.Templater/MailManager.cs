@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NLog;
+using RSB.Interfaces;
 using RSB.Mail.Templater.Models;
 
 namespace RSB.Mail.Templater
@@ -11,25 +12,45 @@ namespace RSB.Mail.Templater
 
         private readonly MailManagerSettings _settings;
         private readonly MailSender _mailSender;
+        private IBus _bus;
 
-        public MailManager(MailManagerSettings settings, MailSender mailSender)
+        public MailManager(MailManagerSettings settings, MailSender mailSender, IBus bus)
         {
             _settings = settings;
             _mailSender = mailSender;
+            _bus = bus;
         }
 
         public async Task Test()
         {
+            var message = CreateMessage();
 
+            Logger.Debug("Sending message");
+            await SendEmail(message);
+            Logger.Debug("Message sent");
+        }
+
+        private async Task SendEmail(IMailMessage message)
+        {
             try
             {
-                var message = new SendUserRegisteredMail
+                await _mailSender.SendEmailAsync(message);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Error while sending message");
+            }
+        }
+
+        private IMailMessage CreateMessage()
+        {
+            var message = new SendUserRegisteredMail
+            {
+                Properties = new MailProperties
                 {
-                    Properties = new MailProperties
-                    {
-                        FromMail = _settings.HostAddress,
-                        FromName = _settings.Hostname,
-                        Recipients = new System.Collections.Generic.List<Recipient>
+                    FromMail = _settings.HostAddress,
+                    FromName = _settings.Hostname,
+                    Recipients = new System.Collections.Generic.List<Recipient>
                     {
                         new Recipient
                         {
@@ -37,20 +58,15 @@ namespace RSB.Mail.Templater
                             ToName = "Nameless One"
                         }
                     },
-                        Subject = "Return to sender"
-                    },
+                    Subject = "Return to sender"
+                },
 
-                    Name = "Nameless One",
-                    Email = "nameless@one.com",
-                    IsPremiumUser = false
-                };
+                Name = "Nameless One",
+                Email = "nameless@one.com",
+                IsPremiumUser = false
+            };
 
-                await _mailSender.SendEmailAsync(message);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Error while sending message");
-            }
+            return message;
         }
 
     }

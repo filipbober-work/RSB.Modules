@@ -12,6 +12,8 @@ namespace RSB.Mail.Templater
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Container _container;
 
+        private MailManager _mailManager;
+
         public MailTemplaterService(Container container)
         {
             _container = container;
@@ -20,46 +22,11 @@ namespace RSB.Mail.Templater
         public async Task Start()
         {
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
-            var mailManager = _container.GetInstance<MailManager>();
+            _mailManager = _container.GetInstance<MailManager>();
             var mailSender = _container.GetInstance<MailSender>();
 
-            // TODO: Move to mail manager
             AddTemplates(mailSender);
-            await mailManager.Test();
-
-            Logger.Debug("Sending message");
-            //try
-            //{
-            //    var message = new SendUserRegisteredMail
-            //    {
-            //        Properties = new MailProperties
-            //        {
-            //            FromMail = _settings.HostAddress,
-            //            FromName = _settings.Hostname,
-            //            Recipients = new System.Collections.Generic.List<Recipient>
-            //        {
-            //            new Recipient
-            //            {
-            //                ToMail = "fxonus.mail@gmail.com",
-            //                ToName = "Nameless One"
-            //            }
-            //        },
-            //            Subject = "Return to sender"
-            //        },
-
-            //        Name = "Nameless One",
-            //        Email = "nameless@one.com",
-            //        IsPremiumUser = false
-            //    };
-
-            //    await mailSender.SendEmailAsync(message);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.Error(ex, "Error while sending message");
-            //}
-
-            Logger.Debug("Message sent");
+            await _mailManager.Test();
         }
 
         public void Stop()

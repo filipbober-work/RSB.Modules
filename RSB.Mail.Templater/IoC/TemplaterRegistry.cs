@@ -30,7 +30,6 @@ namespace RSB.Mail.Templater.IoC
                 {
                     TemplatesPath = Properties.Settings.Default.TemplatesPath,
                     Hostname = Properties.Settings.Default.SenderHostname,
-                    //HostAddress = Properties.Settings.Default.SenderAddress,
                     Port = Properties.Settings.Default.SenderPort,
                     Username = Properties.Settings.Default.SenderUsername,
                     Password = Properties.Settings.Default.SenderPassword
@@ -43,43 +42,6 @@ namespace RSB.Mail.Templater.IoC
                     Hostname = Properties.Settings.Default.SenderHostname,
                     HostAddress = Properties.Settings.Default.SenderAddress
                 });
-
-        //    For<MailManager>().Use(
-        //new MailManager(new MailManagerSettings
-        //{
-        //    Hostname = Properties.Settings.Default.SenderHostname,
-        //    HostAddress = Properties.Settings.Default.SenderAddress,
-        //}), new MailSender(new MailSender
-        //{
-        //    TemplatesPath = Properties.Settings.Default.TemplatesPath,
-        //    Port = Properties.Settings.Default.SenderPort,
-        //    Username = Properties.Settings.Default.SenderUsername,
-        //    Password = Properties.Settings.Default.SenderPassword
-        //}
-        //).Singleton();
-
-            //For<MailManager>().Use(
-            //    new MailManager(new MailManagerSettings
-            //    {
-            //        Hostname = Properties.Settings.Default.SenderHostname,
-            //        HostAddress = Properties.Settings.Default.SenderAddress,
-            //    }), new MailSender(new MailSender
-            //    {
-            //        TemplatesPath = Properties.Settings.Default.TemplatesPath,
-            //        Port = Properties.Settings.Default.SenderPort,
-            //        Username = Properties.Settings.Default.SenderUsername,
-            //        Password = Properties.Settings.Default.SenderPassword
-            //    }
-            //    ).Singleton();
-
-            //For<MailSender>().Use(
-            //    new MailSender(new MailSenderSettings
-            //    {
-            //        TemplatesPath = Properties.Settings.Default.TemplatesPath,
-            //        Port = Properties.Settings.Default.SenderPort,
-            //        Username = Properties.Settings.Default.SenderUsername,
-            //        Password = Properties.Settings.Default.SenderPassword
-            //    })).Singleton();
 
         }
     }

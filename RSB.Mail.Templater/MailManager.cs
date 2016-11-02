@@ -38,7 +38,7 @@ namespace RSB.Mail.Templater
             var currentAssembly = GetType().GetTypeInfo().Assembly;
             var implementedIMessage = currentAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
 
-            var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate));
+            var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
             foreach (var t in implementedIMessage)
             {
                 var generic = method.MakeGenericMethod(t);
@@ -46,8 +46,7 @@ namespace RSB.Mail.Templater
             }
         }
 
-        // TODO: This thould be private
-        public void RegisterTemplate<T>() where T : IMailMessage, new()
+        protected void RegisterTemplate<T>() where T : IMailMessage, new()
         {
             _mailSender.AddTemplate<T>();
             _bus.RegisterAsyncQueueHandler<T>(async msg => await SendEmailAsync(msg));

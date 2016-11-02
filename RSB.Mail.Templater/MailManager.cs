@@ -35,7 +35,9 @@ namespace RSB.Mail.Templater
 
         private void InitializeTemplates()
         {
-            var currentAssembly = GetType().GetTypeInfo().Assembly;
+            //var currentAssembly = GetType().GetTypeInfo().Assembly;
+
+            var currentAssembly = Assembly.LoadFrom("EmailTemplates.dll");
             var implementedIMessage = currentAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
 
             var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);

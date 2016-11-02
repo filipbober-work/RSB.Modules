@@ -112,5 +112,17 @@ namespace RSB.Mail.Templater.Properties {
                 return ((string)(this["TemplatesPath"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("EmailTemplates.dll")]
+        public string EmailDll {
+            get {
+                return ((string)(this["EmailDll"]));
+            }
+            set {
+                this["EmailDll"] = value;
+            }
+        }
     }
 }

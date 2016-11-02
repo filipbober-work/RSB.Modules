@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
 using RSB.Interfaces;
 using RSB.Mail.Templater.Models;
 using System.Reflection;
-using System.Web.Razor.Tokenizer.Symbols;
 
 namespace RSB.Mail.Templater
 {
@@ -36,72 +33,17 @@ namespace RSB.Mail.Templater
             _isInitialized = true;
         }
 
-
-        // TODO: Temp
-        static IEnumerable<Type> GetTypesWithHelpAttribute(Assembly assembly)
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (type.GetCustomAttributes(typeof(MailAttribute), true).Length > 0)
-                {
-                    yield return type;
-                }
-            }
-        }
-
         private void InitializeTemplates()
         {
-            // We get the current assembly through the current class
-            var currentAssembly = this.GetType().GetTypeInfo().Assembly;
+            var currentAssembly = GetType().GetTypeInfo().Assembly;
+            var implementedIMessage = currentAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
 
-            // we filter the defined classes according to the interfaces they implement
-            var iDisposableAssemblies = currentAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IDisposable))).ToList();
-
-            //var def = iDisposableAssemblies[0].GetGenericTypeDefinition();
-            //var x = def.MakeGenericType();
-            //typeof(x);
-
-
-            //Type customType = iDisposableAssemblies[0];
-            //Type genericListType = typeof(List<>);
-            //Type customListType = genericListType.MakeGenericType(customType);
-            //IList customListInstance = (IList) Activator.CreateInstance(customListType);
-            //customListInstance.Add(customListInstance);
-
-
-
-
-            //foreach (var t in iDisposableAssemblies)
-            //{
-            //    //    MethodInfo method = typeof(MailManager).GetMethod("RegisterTemplate");
-            //    //    MethodInfo generic = method.MakeGenericMethod(t);
-            //    //    generic.Invoke(this, null);
-
-
-
-            //    var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate));
-            //    method.MakeGenericMethod(t).Invoke(this, null);
-
-            //}
-
-            //var v =TypesImplementingInterface(typeof(IMailMessage));
-
-            //RegisterTemplate<def.generictype>();
-
-
-
-            //generic.Invoke(this, null);
-
-            var types = GetTypesWithHelpAttribute(currentAssembly);
-            foreach (var t in types)
-            //foreach (var t in iDisposableAssemblies)
+            var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate));
+            foreach (var t in implementedIMessage)
             {
-                MethodInfo method = typeof(MailManager).GetMethod(nameof(RegisterTemplate));
-                MethodInfo generic = method.MakeGenericMethod(t);
+                var generic = method.MakeGenericMethod(t);
                 generic.Invoke(this, null);
             }
-
-            //RegisterTemplate<SendUserRegisteredMail>();
         }
 
         // TODO: This thould be private

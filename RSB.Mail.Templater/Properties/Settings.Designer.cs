@@ -106,7 +106,7 @@ namespace RSB.Mail.Templater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("EmailTemplates")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Templates")]
         public string TemplatesPath {
             get {
                 return ((string)(this["TemplatesPath"]));

@@ -25,10 +25,17 @@ namespace RSB.Mail.Templater.IoC
                 //RabbitMqTransportSettings.FromConfigurationFile()
             ))).Singleton();
 
+            For<MailManagerSettings>().Use(
+                new MailManagerSettings
+                {
+                    TemplatesDll = Properties.Settings.Default.TemplatesDll
+                }
+            );
+
             For<MailSenderSettings>().Use(
                 new MailSenderSettings
                 {
-                    TemplatesPath = Properties.Settings.Default.TemplatesPath,
+                    TemplatesPath = Properties.Settings.Default.TemplatesDir,
                     Hostname = Properties.Settings.Default.SenderHostname,
                     Port = Properties.Settings.Default.SenderPort,
                     Username = Properties.Settings.Default.SenderUsername,

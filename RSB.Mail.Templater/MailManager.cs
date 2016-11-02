@@ -14,13 +14,15 @@ namespace RSB.Mail.Templater
 
         private readonly MailSender _mailSender;
         private readonly IBus _bus;
+        private readonly MailManagerSettings _settings;
 
         private bool _isInitialized;
 
-        public MailManager(MailSender mailSender, IBus bus)
+        public MailManager(MailSender mailSender, IBus bus, MailManagerSettings settings)
         {
             _mailSender = mailSender;
             _bus = bus;
+            _settings = settings;
         }
 
         public void Start()
@@ -35,10 +37,8 @@ namespace RSB.Mail.Templater
 
         private void InitializeTemplates()
         {
-            //var currentAssembly = GetType().GetTypeInfo().Assembly;
-
-            var currentAssembly = Assembly.LoadFrom("EmailTemplates.dll");
-            var implementedIMessage = currentAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
+            var tempaltesAssembly = Assembly.LoadFrom(_settings.TemplatesDll);
+            var implementedIMessage = tempaltesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
 
             var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
             foreach (var t in implementedIMessage)

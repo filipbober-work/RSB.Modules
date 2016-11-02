@@ -107,21 +107,18 @@ namespace RSB.Mail.Templater.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Templates")]
-        public string TemplatesPath {
+        public string TemplatesDir {
             get {
-                return ((string)(this["TemplatesPath"]));
+                return ((string)(this["TemplatesDir"]));
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EmailTemplates.dll")]
-        public string EmailDll {
+        public string TemplatesDll {
             get {
-                return ((string)(this["EmailDll"]));
-            }
-            set {
-                this["EmailDll"] = value;
+                return ((string)(this["TemplatesDll"]));
             }
         }
     }

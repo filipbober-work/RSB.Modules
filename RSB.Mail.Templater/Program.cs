@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Reflection;
+using System.Security;
+using System.Security.Permissions;
+using System.Security.Policy;
 using NLog;
 using RSB.Mail.Templater.IoC;
 using StructureMap;
@@ -11,8 +15,25 @@ namespace RSB.Mail.Templater
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        static void Main()
+        static int Main()
         {
+            if (AppDomain.CurrentDomain.IsDefaultAppDomain())
+            {
+                AppDomainSetup adSetup = new AppDomainSetup();
+                adSetup.ApplicationBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+                var current = AppDomain.CurrentDomain;
+                var strongNames = new StrongName[0];
+
+                var domain = AppDomain.CreateDomain(
+                    "RazorAppDomain", null,
+                    current.SetupInformation, new PermissionSet(PermissionState.Unrestricted),
+                    strongNames);
+
+                var exitCode = domain.ExecuteAssembly(Assembly.GetExecutingAssembly().Location);
+                AppDomain.Unload(domain);
+                return exitCode;
+            }
+
             HostFactory.Run(x =>
             {
                 x.SetServiceName("RSB.Modules.Mail.Templater");
@@ -31,6 +52,8 @@ namespace RSB.Mail.Templater
                     service.WhenStopped(srv => srv.Stop());
                 });
             });
+
+            return 0;
         }
 
         private static MailTemplaterService InitializeTemplaterService()

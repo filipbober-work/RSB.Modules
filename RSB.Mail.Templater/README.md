@@ -86,7 +86,7 @@ Sending SendUserRegisteredMail email to the example@mail.com recipient.
   "FromName": "Hostname",
   "Recipients":
   [
-   { "ToMail": "fxonus.mail@gmail.com",
+   { "ToMail": "example@mail.com",
      "ToName": "Nameless One" }
   ],
   "Subject": "Return to sender",

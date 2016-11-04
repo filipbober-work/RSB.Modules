@@ -70,7 +70,7 @@ namespace RSB.Mail.Templater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fxonus.mail@gmail.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("example@mail.com")]
         public string SenderAddress {
             get {
                 return ((string)(this["SenderAddress"]));
@@ -79,7 +79,7 @@ namespace RSB.Mail.Templater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fxonus.mail@gmail.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("sampleuser.example@mail.com")]
         public string SenderUsername {
             get {
                 return ((string)(this["SenderUsername"]));
@@ -88,7 +88,7 @@ namespace RSB.Mail.Templater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("samplePassword")]
         public string SenderPassword {
             get {
                 return ((string)(this["SenderPassword"]));

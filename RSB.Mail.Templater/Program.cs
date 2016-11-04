@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Security;
-using System.Security.Permissions;
-using System.Security.Policy;
 using NLog;
 using RSB.Mail.Templater.IoC;
 using StructureMap;
@@ -15,7 +11,7 @@ namespace RSB.Mail.Templater
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        static int Main()
+        static void Main()
         {
             HostFactory.Run(x =>
             {
@@ -35,8 +31,6 @@ namespace RSB.Mail.Templater
                     service.WhenStopped(srv => srv.Stop());
                 });
             });
-
-            return 0;
         }
 
         private static MailTemplaterService InitializeTemplaterService()

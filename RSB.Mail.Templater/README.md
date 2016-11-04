@@ -80,19 +80,20 @@ To send an email simply publish message via rabbit to the exchange named after m
 Sending SendUserRegisteredMail email to the example@mail.com recipient.
 
 ```json
-{"Properties": 
+{"Properties":
  {
   "FromMail": "HostAddress",
-  "FromName": "sender_name",
+  "FromName": "Hostname",
   "Recipients":
   [
-   { "ToMail": "example@mail.com,
-     "ToName": "recipient_name" }
+   { "ToMail": "fxonus.mail@gmail.com",
+     "ToName": "Nameless One" }
   ],
   "Subject": "Return to sender",
+ },
+  "Name": "Nameless One",
   "Email": "nameless@one.com",
   "IsPremiumUser": false
- }
 }
 ```
 

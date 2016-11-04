@@ -103,7 +103,7 @@
     <Compile Include="MailSenderSettings.cs" />
     <Compile Include="MailTemplaterService.cs" />
     <Compile Include="Models\IMailMessage.cs" />
-    <Compile Include="Models\MailCommon.cs" />
+    <Compile Include="Models\MailProperties.cs" />
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

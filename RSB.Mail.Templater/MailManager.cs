@@ -38,10 +38,15 @@ namespace RSB.Mail.Templater
         private void InitializeTemplates()
         {
             var tempaltesAssembly = Assembly.LoadFrom(_settings.TemplatesDll);
-            var implementedIMessage = tempaltesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
+            var implementedIMessages = tempaltesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(IMailMessage))).ToList();
+
+            if (implementedIMessages.Count < 1)
+            {
+                Logger.Warn("No implementations of IMailMessage found in the given assembly");
+            }
 
             var method = typeof(MailManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
-            foreach (var t in implementedIMessage)
+            foreach (var t in implementedIMessages)
             {
                 var generic = method.MakeGenericMethod(t);
                 generic.Invoke(this, null);

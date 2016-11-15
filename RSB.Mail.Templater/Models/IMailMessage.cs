@@ -2,6 +2,6 @@
 {
     public interface IMailMessage
     {
-        MailProperties Properties { get; set; }
+        MailProperties Properties { get; set; }        
     }
 }

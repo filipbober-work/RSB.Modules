@@ -97,12 +97,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MailManager.cs" />
+    <Compile Include="TemplateManager.cs" />
     <Compile Include="MailManagerSettings.cs" />
-    <Compile Include="MailSender.cs" />
+    <Compile Include="Templater.cs" />
     <Compile Include="MailSenderSettings.cs" />
     <Compile Include="MailTemplaterService.cs" />
     <Compile Include="Models\IMailMessage.cs" />
+    <Compile Include="Models\ITemplate.cs" />
     <Compile Include="Models\MailProperties.cs" />
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Program.cs" />

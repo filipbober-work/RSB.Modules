@@ -10,7 +10,7 @@ namespace RSB.Mail.Templater
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Container _container;
 
-        private MailManager _mailManager;
+        private TemplateManager _templateManager;
 
         public MailTemplaterService(Container container)
         {
@@ -20,9 +20,9 @@ namespace RSB.Mail.Templater
         public void Start()
         {
             Logger.Info("Starting {0}", nameof(MailTemplaterService));
-            _mailManager = _container.GetInstance<MailManager>();
+            _templateManager = _container.GetInstance<TemplateManager>();
 
-            _mailManager.Start();
+            _templateManager.Start();
         }
 
         public void Stop()

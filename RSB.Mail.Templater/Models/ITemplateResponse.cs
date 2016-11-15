@@ -2,6 +2,6 @@
 {
     public interface ITemplateResponse
     {
-        string Result { get; set; }
+        string Text { get; set; }
     }
 }

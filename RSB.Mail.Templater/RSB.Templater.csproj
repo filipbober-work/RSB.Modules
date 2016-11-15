@@ -97,6 +97,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ITemplateRequest.cs" />
+    <Compile Include="Models\ITemplateResponse.cs" />
     <Compile Include="TemplateManager.cs" />
     <Compile Include="MailManagerSettings.cs" />
     <Compile Include="Templater.cs" />

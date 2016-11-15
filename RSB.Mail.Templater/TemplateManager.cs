@@ -57,6 +57,11 @@ namespace RSB.Mail.Templater
         {
             _templater.AddTemplate<T>();
             _bus.RegisterAsyncQueueHandler<T>(async msg => await SendCreatedTemplateAsync(msg));
+
+            // ---
+
+            // ---
+
         }
 
         private async Task SendCreatedTemplateAsync(ITemplate message)

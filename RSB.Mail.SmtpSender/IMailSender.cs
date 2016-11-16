@@ -6,6 +6,5 @@ namespace RSB.Mail.SmtpSender
     public interface IMailSender
     {
         Task SendEmailAsync(SendMailMessage mail);
-        void SendEmail(SendMailMessage mail);
     }
 }

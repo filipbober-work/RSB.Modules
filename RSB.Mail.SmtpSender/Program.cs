@@ -10,7 +10,7 @@ namespace RSB.Mail.SmtpSender
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        static void Main(string[] args)
+        static void Main()
         {
             HostFactory.Run(x =>
             {

@@ -17,32 +17,9 @@ namespace RSB.Mail.SmtpSender
             _settings = settings;
         }
 
-        public void SendEmail(SendMailMessage mail)
-        {
-            var message = new MimeMessage();
-
-            foreach (var recipient in mail.Recipients)
-            {
-                message.From.Add(new MailboxAddress(mail.FromName, mail.FromMail));
-                message.To.Add(new MailboxAddress(recipient.ToName, recipient.ToMail));
-                message.Subject = mail.Subject;
-
-                var builder = new BodyBuilder();
-                builder.HtmlBody = string.Format(mail.Body);
-                message.Body = builder.ToMessageBody();
-
-                using (var client = new SmtpClient())
-                {
-                    client.Connect(_settings.Hostname, _settings.Port);
-                    client.Authenticate(_settings.Username, _settings.Password);
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-            }
-        }
-
         public async Task SendEmailAsync(SendMailMessage mail)
         {
+            Logger.Debug("Sending email");
             var message = new MimeMessage();
 
             foreach (var recipient in mail.Recipients)
@@ -51,8 +28,11 @@ namespace RSB.Mail.SmtpSender
                 message.To.Add(new MailboxAddress(recipient.ToName, recipient.ToMail));
                 message.Subject = mail.Subject;
 
-                var builder = new BodyBuilder();
-                builder.HtmlBody = string.Format(mail.Body);
+                var builder = new BodyBuilder
+                {
+                    HtmlBody = string.Format(mail.Body)
+                };
+
                 message.Body = builder.ToMessageBody();
 
                 using (var client = new SmtpClient())
@@ -62,6 +42,8 @@ namespace RSB.Mail.SmtpSender
                     await client.SendAsync(message);
                     await client.DisconnectAsync(true);
                 }
+
+                Logger.Debug("Email sent");
             }
 
         }

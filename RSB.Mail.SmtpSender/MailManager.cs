@@ -23,30 +23,10 @@ namespace RSB.Mail.SmtpSender
 
         public void Start()
         {
-            // TODO: Try to make it async
-            //_bus.RegisterQueueHandler<SendMailMessage>(HandleMailMessage, _settings.InstanceName);
-
-            _bus.RegisterAsyncQueueHandler<SendMailMessage>(SendEmailAsync, _settings.InstanceName);
+            _bus.RegisterAsyncQueueHandler<SendMailMessage>(HandleMailMessageAsync, _settings.InstanceName);
         }
 
-        private void HandleMailMessage(SendMailMessage message)
-        {
-            SendEmail(message);
-        }
-
-        private void SendEmail(SendMailMessage message)
-        {
-            try
-            {
-                _mailSender.SendEmail(message);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Error while sending message");
-            }
-        }
-
-        private async Task SendEmailAsync(SendMailMessage message)
+        private async Task HandleMailMessageAsync(SendMailMessage message)
         {
             try
             {

@@ -30,7 +30,7 @@ namespace RSB.Mail.Templater
             if (_isInitialized)
                 return;
 
-            InitializeTemplates();            
+            InitializeTemplates();
 
             _isInitialized = true;
         }
@@ -74,13 +74,14 @@ namespace RSB.Mail.Templater
                 Logger.Warn("No implementations of ITemplateResponse found in the given assembly");
             }
 
-            var method = typeof(TemplateManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
+            //var method = typeof(TemplateManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
+            var method = typeof(Templater).GetMethod(nameof(_templater.AddTemplate), BindingFlags.Instance | BindingFlags.Public);
 
-            foreach (var response in implementedResponses)
+            foreach (var responseType in implementedResponses)
             {
                 // ---
                 // Find matching request
-                var contractType = GetContractClassType(templatesAssembly, response);
+                var contractType = GetContractClassType(templatesAssembly, responseType);
                 // ---
 
                 //var generic = method.MakeGenericMethod(response);
@@ -88,7 +89,13 @@ namespace RSB.Mail.Templater
 
 
                 var generic = method.MakeGenericMethod(contractType);
-                generic.Invoke(this, null);
+               // generic.Invoke(this, null);
+                generic.Invoke(_templater, null);
+
+
+                var requestType = GetRequestClassType(templatesAssembly, responseType);
+
+
             }
         }
 
@@ -120,6 +127,37 @@ namespace RSB.Mail.Templater
             //return responseNamespaceStr + rawType;
         }
 
+        private Type GetRequestClassType(Assembly assembly, TypeInfo responseType)
+        {
+            var responseTypeStr = responseType.ToString();
+
+            var TypeEndStr = "Response";
+
+            var requestTypeStr = responseTypeStr.Remove(responseTypeStr.Length - TypeEndStr.Length);
+
+            requestTypeStr += "Request";
+
+            var requestType = assembly.DefinedTypes.Where(t => t.FullName == requestTypeStr);
+            return requestType.FirstOrDefault();
+        }
+
+        //private void CreateRabbitContract(Type requestType, Type responseType, Type contractType)
+        //{
+        //    //var requestType = typeof(RegisterCallHandler<>)
+        //    _bus.RegisterCallHandler(
+
+        //    //_bus.RegisterCallHandler<ITemplateRequest<requestType>, responseType>(CreateTemplateHandler<constractType>);
+        //}
+
+        private ITemplateResponse<T> CreateTemplateHandler<T>(ITemplateRequest<T> request, Type responseType)
+        {
+            // TODO
+            var instance = Activator.CreateInstance(responseType) as ITemplateResponse<T>;
+            instance.Text = _templater.CreateTemplateBody(request.Template);
+
+            return instance;
+        }
+
         //protected void RegisterTemplate<T>() where T : ITemplate, new()
         // TODO: Make private - read how
         //protected void RegisterTemplate<TRequest, TResponse>()
@@ -136,6 +174,20 @@ namespace RSB.Mail.Templater
 
             _templater.AddTemplate<T>();
         }
+
+        //// TODO: make private
+        //protected void RegisterRpc<TRequest, TResponse>()
+        //{
+        //    _bus.RegisterCallHandler<TRequest, TResponse>(Tmp);
+        //}
+
+        //private TResponse Tmp<TRequest, TResponse>(TRequest request) where TResponse : class
+        //{
+        //    // TODO
+        //    var instance = Activator.CreateInstance(TResponse) as TResponse;
+
+        //    return instance;
+        //}
 
         private async Task SendCreatedTemplateAsync(ITemplate message)
         {

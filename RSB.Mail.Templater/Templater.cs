@@ -94,6 +94,13 @@ namespace RSB.Mail.Templater
         //}
 
         //private static string CreateTemplateBody<T>(T template) where T : Models.ITemplate
+        //private static string CreateTemplateBody<T>(T contract) //where T : Models.ITemplate
+        //{
+        //    //var typeName = template.GetType().Name;
+        //    var typeName = contract.GetType().Name;
+        //    return Engine.Razor.RunCompile(typeName, contract.GetType(), contract);
+        //}
+
         public string CreateTemplateBody<T>(T contract) //where T : Models.ITemplate
         {
             //var typeName = template.GetType().Name;

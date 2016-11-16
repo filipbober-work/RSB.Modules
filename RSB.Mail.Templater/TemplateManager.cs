@@ -55,7 +55,7 @@ namespace RSB.Mail.Templater
 
         private void InitializeTemplates()
         {
-            var tempaltesAssembly = Assembly.LoadFrom(_settings.TemplatesDll);
+            var templatesAssembly = Assembly.LoadFrom(_settings.TemplatesDll);
             // TODO: Zaminiec inter == - znak rownosci na cos innego - moze jakas metode - wygooglowac
 
             //          bool isBar = foo.GetType().GetInterfaces().Any(x =>
@@ -64,50 +64,58 @@ namespace RSB.Mail.Templater
 
             //var implementedIMessages = tempaltesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter => inter == typeof(ITemplateResponse<>))).ToList();
 
-            var implementedIMessages = tempaltesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter =>
+            var implementedResponses = templatesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter =>
                     inter.IsGenericType && inter.GetGenericTypeDefinition() == typeof(ITemplateResponse<>))).ToList();
             //inter == typeof(ITemplateResponse<>))).ToList();
 
 
-            if (implementedIMessages.Count < 1)
+            if (implementedResponses.Count < 1)
             {
                 Logger.Warn("No implementations of IMailMessage found in the given assembly");
             }
 
             var method = typeof(TemplateManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
-            foreach (var t in implementedIMessages)
+
+            foreach (var response in implementedResponses)
             {
-                var generic = method.MakeGenericMethod(t);
+                // ---
+                // Find matching request
+                var tmp = GetContractClassType(templatesAssembly, response);
+                // ---
+
+                var generic = method.MakeGenericMethod(response);
                 generic.Invoke(this, null);
 
 
-
-
-
-
-
-
-
-
-                var myMethod = t.GetMethods()
-                                .Where(m => m.Name == "MyMethod")
-                                .Select(m => new
-                                {
-                                    Method = m,
-                                    Params = m.GetParameters(),
-                                    Args = m.GetGenericArguments()
-                                })
-                                .Where(x => x.Params.Length == 1
-                                            && x.Args.Length == 1
-                                            && x.Params[0].ParameterType == x.Args[0])
-                                .Select(x => x.Method)
-                                .First();
-
-
-
-
-
             }
+        }
+
+        private Type GetContractClassType(Assembly assembly, TypeInfo responseType)
+        {
+            var responseTypeStr = responseType.ToString();
+
+            int pos = responseTypeStr.LastIndexOfAny(new[] { '.' });
+            pos += 1;
+
+            var TypeEndStr = "Response";
+            var TypeStartStr = "Fill";
+
+            //var result = rawtype.Substring(pos + 1 + 4);
+            //result = result.Remove(result.Length - 8);
+
+            var rawTypeStr = responseTypeStr.Substring(pos + TypeStartStr.Length);
+            rawTypeStr = rawTypeStr.Remove(rawTypeStr.Length - TypeEndStr.Length);
+
+            var responseNamespaceStr = responseTypeStr.Substring(0, pos);
+
+            var fullRawTypeStr = responseNamespaceStr + rawTypeStr;
+
+            //var implementedResponses = templatesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter =>
+            //        inter.IsGenericType && inter.GetGenericTypeDefinition() == typeof(ITemplateResponse<>))).ToList();
+            var rawType = assembly.DefinedTypes.Where(t => t.FullName == fullRawTypeStr);
+            return rawType.FirstOrDefault();
+
+            //return responseNamespaceStr + rawType;
         }
 
         //protected void RegisterTemplate<T>() where T : ITemplate, new()

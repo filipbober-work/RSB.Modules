@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using NLog;
 using RSB.Interfaces;
-using RSB.Mail.Templater.Models;
-using System.Reflection;
+using RSB.Templater.Models;
 
-namespace RSB.Mail.Templater
+namespace RSB.Templater
 {
     public class TemplateManager
     {
@@ -14,11 +13,11 @@ namespace RSB.Mail.Templater
 
         private readonly Templater _templater;
         private readonly IBus _bus;
-        private readonly MailManagerSettings _settings;
+        private readonly TemplateManagerSettings _settings;
 
         private bool _isInitialized;
 
-        public TemplateManager(Templater templater, IBus bus, MailManagerSettings settings)
+        public TemplateManager(Templater templater, IBus bus, TemplateManagerSettings settings)
         {
             _templater = templater;
             _bus = bus;
@@ -37,7 +36,7 @@ namespace RSB.Mail.Templater
 
         private void InitializeTemplates()
         {
-            var templatesAssembly = Assembly.LoadFrom(_settings.TemplatesDll);
+            var templatesAssembly = Assembly.LoadFrom(_settings.TemplatesDllPath);
 
             var implementedResponses = templatesAssembly.DefinedTypes.Where(type => type.ImplementedInterfaces.Any(inter =>
                     inter.IsGenericType && inter.GetGenericTypeDefinition() == typeof(ITemplateResponse<>))).ToList();
@@ -52,9 +51,9 @@ namespace RSB.Mail.Templater
             foreach (var responseType in implementedResponses)
             {
                 var contractType = GetContractClassType(templatesAssembly, responseType);
+                Logger.Debug("Adding template template: {0}", contractType.Name);
                 var addTemplateGeneric = addTemplateMethod.MakeGenericMethod(contractType);
                 addTemplateGeneric.Invoke(_templater, null);
-
 
                 var requestType = GetRequestClassType(templatesAssembly, responseType);
                 var registerRpcMethod = typeof(TemplateManager).GetMethod(nameof(RegisterRpc), BindingFlags.Instance | BindingFlags.NonPublic);
@@ -96,34 +95,27 @@ namespace RSB.Mail.Templater
             return requestType.FirstOrDefault();
         }
 
-        // TODO: Make private
-        protected void RegisterRpc<TRequest, TResponse, T>()
+        private void RegisterRpc<TRequest, TResponse, T>()
             where TResponse : ITemplateResponse<T>, new()
             where TRequest : ITemplateRequest<T>, new()
         {
-            _bus.RegisterCallHandler<TRequest, TResponse>(TmpHandler<TRequest, TResponse, T>);
+            _bus.RegisterCallHandler<TRequest, TResponse>(TemplateResponseHandler<TRequest, TResponse, T>);
+
+            Logger.Debug("Registered RPC for " + typeof(T));
         }
 
-        private TResponse TmpHandler<TRequest, TResponse, T>(TRequest request)
+        private TResponse TemplateResponseHandler<TRequest, TResponse, T>(TRequest request)
             where TResponse : ITemplateResponse<T>, new()
             where TRequest : ITemplateRequest<T>
         {
-            var response = new TResponse();
-            response.Text = _templater.CreateTemplateBody(request.Template);
+            var response = new TResponse
+            {
+                Text = _templater.CreateTemplateBody(request.Template)
+            };
+
+            Logger.Debug("Response created for: {0}", typeof(T));
 
             return response;
-        }
-
-        private async Task SendCreatedTemplateAsync(ITemplate message)
-        {
-            try
-            {
-                await _templater.SendCreatedTemplateAsync(message);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Error while sending message");
-            }
         }
 
     }

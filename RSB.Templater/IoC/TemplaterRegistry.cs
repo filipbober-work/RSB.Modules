@@ -3,7 +3,7 @@ using RSB.Interfaces;
 using RSB.Transports.RabbitMQ;
 using StructureMap;
 
-namespace RSB.Mail.Templater.IoC
+namespace RSB.Templater.IoC
 {
     class TemplaterRegistry : Registry
     {
@@ -22,27 +22,21 @@ namespace RSB.Mail.Templater.IoC
                     UserName = Properties.Settings.Default.RabbitUsername,
                     Password = Properties.Settings.Default.RabbitPassword
                 }
-                //RabbitMqTransportSettings.FromConfigurationFile()
             ))).Singleton();
 
-            For<MailManagerSettings>().Use(
-                new MailManagerSettings
+            For<TemplateManagerSettings>().Use(
+                new TemplateManagerSettings
                 {
-                    TemplatesDll = Properties.Settings.Default.TemplatesDll
+                    TemplatesDllPath = Properties.Settings.Default.TemplatesDllPath
                 }
             );
 
-            For<MailSenderSettings>().Use(
-                new MailSenderSettings
+            For<TemplaterSettings>().Use(
+                new TemplaterSettings
                 {
-                    TemplatesPath = Properties.Settings.Default.TemplatesDir,
-                    Hostname = Properties.Settings.Default.SenderHostname,
-                    Port = Properties.Settings.Default.SenderPort,
-                    Username = Properties.Settings.Default.SenderUsername,
-                    Password = Properties.Settings.Default.SenderPassword
+                    TemplatesPath = Properties.Settings.Default.TemplatesDirPath
                 }
             );
-
         }
     }
 }

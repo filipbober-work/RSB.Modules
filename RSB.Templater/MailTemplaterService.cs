@@ -3,7 +3,7 @@ using NLog;
 using RSB.Interfaces;
 using StructureMap;
 
-namespace RSB.Mail.Templater
+namespace RSB.Templater
 {
     class MailTemplaterService : IDisposable
     {

@@ -1,4 +1,4 @@
-﻿namespace RSB.Mail.Templater.Models
+﻿namespace RSB.Templater.Models
 {
     // ReSharper disable once UnusedTypeParameter
     public interface ITemplateResponse<T>

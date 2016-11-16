@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace RSB.Mail.Templater.Models
+namespace RSB.Templater.Models
 {
     public class MailProperties
     {

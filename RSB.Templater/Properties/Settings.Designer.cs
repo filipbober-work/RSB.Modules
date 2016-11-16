@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RSB.Mail.Templater.Properties {
+namespace RSB.Templater.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -61,64 +61,19 @@ namespace RSB.Mail.Templater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("smtp.gmail.com")]
-        public string SenderHostname {
-            get {
-                return ((string)(this["SenderHostname"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("example@mail.com")]
-        public string SenderAddress {
-            get {
-                return ((string)(this["SenderAddress"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sampleuser.example@mail.com")]
-        public string SenderUsername {
-            get {
-                return ((string)(this["SenderUsername"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("samplePassword")]
-        public string SenderPassword {
-            get {
-                return ((string)(this["SenderPassword"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("587")]
-        public int SenderPort {
-            get {
-                return ((int)(this["SenderPort"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Templates")]
-        public string TemplatesDir {
+        public string TemplatesDirPath {
             get {
-                return ((string)(this["TemplatesDir"]));
+                return ((string)(this["TemplatesDirPath"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Templates.dll")]
-        public string TemplatesDll {
+        public string TemplatesDllPath {
             get {
-                return ((string)(this["TemplatesDll"]));
+                return ((string)(this["TemplatesDllPath"]));
             }
         }
     }

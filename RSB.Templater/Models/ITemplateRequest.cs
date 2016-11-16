@@ -1,4 +1,4 @@
-﻿namespace RSB.Mail.Templater.Models
+﻿namespace RSB.Templater.Models
 {
     public interface ITemplateRequest<T>
     {

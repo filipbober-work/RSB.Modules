@@ -14,25 +14,10 @@
     <Setting Name="RabbitPassword" Type="System.String" Scope="Application">
       <Value Profile="(Default)">guest</Value>
     </Setting>
-    <Setting Name="SenderHostname" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">smtp.gmail.com</Value>
-    </Setting>
-    <Setting Name="SenderAddress" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">example@mail.com</Value>
-    </Setting>
-    <Setting Name="SenderUsername" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">sampleuser.example@mail.com</Value>
-    </Setting>
-    <Setting Name="SenderPassword" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">samplePassword</Value>
-    </Setting>
-    <Setting Name="SenderPort" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">587</Value>
-    </Setting>
-    <Setting Name="TemplatesDir" Type="System.String" Scope="Application">
+    <Setting Name="TemplatesDirPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Templates</Value>
     </Setting>
-    <Setting Name="TemplatesDll" Type="System.String" Scope="Application">
+    <Setting Name="TemplatesDllPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Templates.dll</Value>
     </Setting>
   </Settings>

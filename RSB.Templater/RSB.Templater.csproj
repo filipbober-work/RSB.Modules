@@ -7,8 +7,8 @@
     <ProjectGuid>{F34CEB80-567A-48DB-8967-A5E205A06E79}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RSB.Mail.Templater</RootNamespace>
-    <AssemblyName>RSB.Mail.Templater</AssemblyName>
+    <RootNamespace>RSB.Templater</RootNamespace>
+    <AssemblyName>RSB.Templater</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -100,9 +100,8 @@
     <Compile Include="Models\ITemplateRequest.cs" />
     <Compile Include="Models\ITemplateResponse.cs" />
     <Compile Include="TemplateManager.cs" />
-    <Compile Include="MailManagerSettings.cs" />
+    <Compile Include="TemplateManagerSettings.cs" />
     <Compile Include="Templater.cs" />
-    <Compile Include="MailSenderSettings.cs" />
     <Compile Include="MailTemplaterService.cs" />
     <Compile Include="Models\IMailMessage.cs" />
     <Compile Include="Models\ITemplate.cs" />

@@ -1,11 +1,10 @@
 ﻿using System;
 using NLog;
-using RSB.Mail.Templater.IoC;
+using RSB.Templater.IoC;
 using StructureMap;
 using Topshelf;
 
-
-namespace RSB.Mail.Templater
+namespace RSB.Templater
 {
     class Program
     {

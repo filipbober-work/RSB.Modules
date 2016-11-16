@@ -1,4 +1,4 @@
-﻿namespace RSB.Mail.Templater
+﻿namespace RSB.MailSender
 {
     public class MailSenderSettings
     {

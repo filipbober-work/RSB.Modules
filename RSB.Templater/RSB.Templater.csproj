@@ -102,7 +102,7 @@
     <Compile Include="TemplateManager.cs" />
     <Compile Include="TemplateManagerSettings.cs" />
     <Compile Include="Templater.cs" />
-    <Compile Include="MailTemplaterService.cs" />
+    <Compile Include="TemplaterService.cs" />
     <Compile Include="Models\IMailMessage.cs" />
     <Compile Include="Models\ITemplate.cs" />
     <Compile Include="Models\MailProperties.cs" />

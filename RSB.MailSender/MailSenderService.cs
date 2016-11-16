@@ -3,26 +3,25 @@ using NLog;
 using RSB.Interfaces;
 using StructureMap;
 
-namespace RSB.Templater
+namespace RSB.MailSender
 {
-    class MailTemplaterService : IDisposable
+    public class MailSenderService : IDisposable
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Container _container;
 
-        private TemplateManager _templateManager;
+        private MailManager _mailManager;
 
-        public MailTemplaterService(Container container)
+        public MailSenderService(Container container)
         {
             _container = container;
         }
 
         public void Start()
         {
-            Logger.Info("Starting {0}", nameof(MailTemplaterService));
-            _templateManager = _container.GetInstance<TemplateManager>();
+            Logger.Info("Starting {0}", nameof(MailSenderService));
 
-            _templateManager.Start();
+            _mailManager = _container.GetInstance<MailManager>();
         }
 
         public void Stop()
@@ -33,7 +32,7 @@ namespace RSB.Templater
 
         public void Dispose()
         {
-            Logger.Info("Stopping {0}", nameof(MailTemplaterService));
+            Logger.Info("Stopping {0}", nameof(MailSenderService));
 
             GC.SuppressFinalize(this);
         }

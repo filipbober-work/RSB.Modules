@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RSB.MailSender.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RabbitHostname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="RabbitUsername" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">guest</Value>
+    </Setting>
+    <Setting Name="RabbitPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">guest</Value>
+    </Setting>
+    <Setting Name="MailHostname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">smtp.gmail.com</Value>
+    </Setting>
+    <Setting Name="MailAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">example@mail.com</Value>
+    </Setting>
+    <Setting Name="MailUsername" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">sampleuser.example@mail.com</Value>
+    </Setting>
+    <Setting Name="MailPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">samplePassword</Value>
+    </Setting>
+    <Setting Name="MailPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">587</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

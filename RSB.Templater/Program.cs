@@ -22,7 +22,7 @@ namespace RSB.Templater
 
                 x.UseNLog();
 
-                x.Service<MailTemplaterService>(service =>
+                x.Service<TemplaterService>(service =>
                 {
                     service.ConstructUsing(srv => InitializeTemplaterService());
 
@@ -32,14 +32,14 @@ namespace RSB.Templater
             });
         }
 
-        private static MailTemplaterService InitializeTemplaterService()
+        private static TemplaterService InitializeTemplaterService()
         {
             Logger.Info("Initializing Templater Service...");
 
             System.IO.Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
             var container = new Container(new TemplaterRegistry());
-            return new MailTemplaterService(container);
+            return new TemplaterService(container);
         }
 
     }

@@ -3,7 +3,7 @@ using RSB.Interfaces;
 using RSB.Transports.RabbitMQ;
 using StructureMap;
 
-namespace RSB.MailSender.IoC
+namespace RSB.Mail.SmtpSender.IoC
 {
     class MailSenderRegistry : Registry
     {
@@ -23,6 +23,8 @@ namespace RSB.MailSender.IoC
                     Password = Properties.Settings.Default.RabbitPassword
                 }
             ))).Singleton();
+
+            For<IMailSender>().Use<SmtpMailSender>();            
 
             For<MailManagerSettings>().Use(
                 new MailManagerSettings()

@@ -1,4 +1,4 @@
-﻿namespace RSB.Modules.Mail.SmtpSender
+﻿namespace RSB.Modules.Mail.SmtpSenderOld
 {
     class SmtpSettings
     {

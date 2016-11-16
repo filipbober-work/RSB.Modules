@@ -3,7 +3,7 @@ using NLog;
 using RSB.Transports.RabbitMQ.Settings;
 using Topshelf;
 
-namespace RSB.Modules.Mail.SmtpSender
+namespace RSB.Modules.Mail.SmtpSenderOld
 {
     class Program
     {

@@ -7,7 +7,7 @@ using RSB.Modules.Mail.Contracts;
 using RSB.Transports.RabbitMQ;
 using RSB.Transports.RabbitMQ.Settings;
 
-namespace RSB.Modules.Mail.SmtpSender
+namespace RSB.Modules.Mail.SmtpSenderOld
 {
     internal class MailSenderService
     {

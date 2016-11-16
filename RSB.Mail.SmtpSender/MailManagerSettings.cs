@@ -1,4 +1,4 @@
-﻿namespace RSB.MailSender
+﻿namespace RSB.Mail.SmtpSender
 {
     public class MailManagerSettings
     {     

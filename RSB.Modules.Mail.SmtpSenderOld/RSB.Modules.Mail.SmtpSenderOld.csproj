@@ -7,8 +7,8 @@
     <ProjectGuid>{D81E14DF-261B-4107-94DC-D202ECA7FF7F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RSB.Modules.Mail.SmtpSender</RootNamespace>
-    <AssemblyName>RSB.Modules.Mail.SmtpSender</AssemblyName>
+    <RootNamespace>RSB.Modules.Mail.SmtpSenderOld</RootNamespace>
+    <AssemblyName>RSB.Modules.Mail.SmtpSenderOld</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

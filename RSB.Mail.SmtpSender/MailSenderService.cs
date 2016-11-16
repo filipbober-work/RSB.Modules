@@ -3,7 +3,7 @@ using NLog;
 using RSB.Interfaces;
 using StructureMap;
 
-namespace RSB.MailSender
+namespace RSB.Mail.SmtpSender
 {
     public class MailSenderService : IDisposable
     {

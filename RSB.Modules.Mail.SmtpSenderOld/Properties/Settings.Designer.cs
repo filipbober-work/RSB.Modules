@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RSB.MailSender.Properties {
+namespace RSB.Modules.Mail.SmtpSenderOld.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,73 +25,55 @@ namespace RSB.MailSender.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
-        public string RabbitHostname {
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        public string InstanceName {
             get {
-                return ((string)(this["RabbitHostname"]));
+                return ((string)(this["InstanceName"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("guest")]
-        public string RabbitUsername {
+        [global::System.Configuration.DefaultSettingValueAttribute("smtp-relay.gmail.com")]
+        public string Hostname {
             get {
-                return ((string)(this["RabbitUsername"]));
+                return ((string)(this["Hostname"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("guest")]
-        public string RabbitPassword {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Password {
             get {
-                return ((string)(this["RabbitPassword"]));
+                return ((string)(this["Password"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("smtp.gmail.com")]
-        public string MailHostname {
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public int Port {
             get {
-                return ((string)(this["MailHostname"]));
+                return ((int)(this["Port"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("example@mail.com")]
-        public string MailAddress {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseSsl {
             get {
-                return ((string)(this["MailAddress"]));
+                return ((bool)(this["UseSsl"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sampleuser.example@mail.com")]
-        public string MailUsername {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Username {
             get {
-                return ((string)(this["MailUsername"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("samplePassword")]
-        public string MailPassword {
-            get {
-                return ((string)(this["MailPassword"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("587")]
-        public int MailPort {
-            get {
-                return ((int)(this["MailPort"]));
+                return ((string)(this["Username"]));
             }
         }
     }

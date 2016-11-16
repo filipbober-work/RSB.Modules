@@ -1,10 +1,10 @@
 ﻿using System;
 using NLog;
-using RSB.MailSender.IoC;
+using RSB.Mail.SmtpSender.IoC;
 using StructureMap;
 using Topshelf;
 
-namespace RSB.MailSender
+namespace RSB.Mail.SmtpSender
 {
     class Program
     {
@@ -14,9 +14,9 @@ namespace RSB.MailSender
         {
             HostFactory.Run(x =>
             {
-                x.SetServiceName("RSB.Modules.Mail.Templater");
-                x.SetDisplayName("RSB.Modules.Mail.SmtpSender");
-                x.SetDescription("This is mail templater service communicating by RSB.");
+                x.SetServiceName("RSB.Modules.MailSender");
+                x.SetDisplayName("RSB.Modules.MailSender");
+                x.SetDescription("This is mail sender service communicating by RSB.");
 
                 x.StartAutomatically();
 

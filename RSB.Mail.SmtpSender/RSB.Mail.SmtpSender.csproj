@@ -7,8 +7,8 @@
     <ProjectGuid>{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RSB.MailSender</RootNamespace>
-    <AssemblyName>RSB.MailSender</AssemblyName>
+    <RootNamespace>RSB.Mail.SmtpSender</RootNamespace>
+    <AssemblyName>RSB.Mail.SmtpSender</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -88,10 +88,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMailSender.cs" />
     <Compile Include="MailManager.cs" />
     <Compile Include="MailManagerSettings.cs" />
     <Compile Include="MailSenderService.cs" />
     <Compile Include="MailSenderSettings.cs" />
+    <Compile Include="Models\IMailMessage.cs" />
+    <Compile Include="Models\MailProperties.cs" />
+    <Compile Include="Models\Recipient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IoC\MailSenderRegistry.cs" />
@@ -100,6 +104,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SmtpMailSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -115,9 +120,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

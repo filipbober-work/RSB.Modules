@@ -75,27 +75,19 @@ namespace RSB.Mail.Templater
             }
 
             //var method = typeof(TemplateManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
-            var method = typeof(Templater).GetMethod(nameof(_templater.AddTemplate), BindingFlags.Instance | BindingFlags.Public);
+            var addTemplateMethod = typeof(Templater).GetMethod(nameof(_templater.AddTemplate), BindingFlags.Instance | BindingFlags.Public);
 
             foreach (var responseType in implementedResponses)
             {
-                // ---
-                // Find matching request
                 var contractType = GetContractClassType(templatesAssembly, responseType);
-                // ---
-
-                //var generic = method.MakeGenericMethod(response);
-
-
-
-                var generic = method.MakeGenericMethod(contractType);
-               // generic.Invoke(this, null);
-                generic.Invoke(_templater, null);
+                var addTemplateGeneric = addTemplateMethod.MakeGenericMethod(contractType);
+                addTemplateGeneric.Invoke(_templater, null);
 
 
                 var requestType = GetRequestClassType(templatesAssembly, responseType);
-
-
+                var registerRpcMethod = typeof(TemplateManager).GetMethod(nameof(RegisterRpc), BindingFlags.Instance | BindingFlags.NonPublic);
+                var registerRpcGeneric = registerRpcMethod.MakeGenericMethod(requestType, responseType, contractType);
+                registerRpcGeneric.Invoke(this, null);
             }
         }
 
@@ -106,14 +98,14 @@ namespace RSB.Mail.Templater
             int pos = responseTypeStr.LastIndexOfAny(new[] { '.' });
             pos += 1;
 
-            var TypeEndStr = "Response";
-            var TypeStartStr = "Fill";
+            var typeEndStr = "Response";
+            var typeStartStr = "Fill";
 
             //var result = rawtype.Substring(pos + 1 + 4);
             //result = result.Remove(result.Length - 8);
 
-            var rawTypeStr = responseTypeStr.Substring(pos + TypeStartStr.Length);
-            rawTypeStr = rawTypeStr.Remove(rawTypeStr.Length - TypeEndStr.Length);
+            var rawTypeStr = responseTypeStr.Substring(pos + typeStartStr.Length);
+            rawTypeStr = rawTypeStr.Remove(rawTypeStr.Length - typeEndStr.Length);
 
             var responseNamespaceStr = responseTypeStr.Substring(0, pos);
 
@@ -131,13 +123,12 @@ namespace RSB.Mail.Templater
         {
             var responseTypeStr = responseType.ToString();
 
-            var TypeEndStr = "Response";
-
-            var requestTypeStr = responseTypeStr.Remove(responseTypeStr.Length - TypeEndStr.Length);
+            var typeEndStr = "Response";
+            var requestTypeStr = responseTypeStr.Remove(responseTypeStr.Length - typeEndStr.Length);
 
             requestTypeStr += "Request";
-
             var requestType = assembly.DefinedTypes.Where(t => t.FullName == requestTypeStr);
+
             return requestType.FirstOrDefault();
         }
 
@@ -149,45 +140,60 @@ namespace RSB.Mail.Templater
         //    //_bus.RegisterCallHandler<ITemplateRequest<requestType>, responseType>(CreateTemplateHandler<constractType>);
         //}
 
-        private ITemplateResponse<T> CreateTemplateHandler<T>(ITemplateRequest<T> request, Type responseType)
-        {
-            // TODO
-            var instance = Activator.CreateInstance(responseType) as ITemplateResponse<T>;
-            instance.Text = _templater.CreateTemplateBody(request.Template);
-
-            return instance;
-        }
-
-        //protected void RegisterTemplate<T>() where T : ITemplate, new()
-        // TODO: Make private - read how
-        //protected void RegisterTemplate<TRequest, TResponse>()
-        protected void RegisterTemplate<T>()
-        {
-            //_templater.AddTemplate<T>();
-            //_bus.RegisterAsyncQueueHandler<T>(async msg => await SendCreatedTemplateAsync(msg));
-
-            // ---
-            //_templater.AddTemplate<T>();
-            //_bus.RegisterCallHandler<TRequest, TResponse>(
-            // ---
-
-
-            _templater.AddTemplate<T>();
-        }
-
-        //// TODO: make private
-        //protected void RegisterRpc<TRequest, TResponse>()
-        //{
-        //    _bus.RegisterCallHandler<TRequest, TResponse>(Tmp);
-        //}
-
-        //private TResponse Tmp<TRequest, TResponse>(TRequest request) where TResponse : class
+        //    // TODO: Make private
+        //protected ITemplateResponse<T> CreateTemplateHandler<T>(ITemplateRequest<T> request, Type responseType)
         //{
         //    // TODO
-        //    var instance = Activator.CreateInstance(TResponse) as TResponse;
+        //    var instance = Activator.CreateInstance(responseType) as ITemplateResponse<T>;
+        //    instance.Text = _templater.CreateTemplateBody(request.Template);
 
         //    return instance;
         //}
+
+        ////protected void RegisterTemplate<T>() where T : ITemplate, new()
+        //// TODO: Make private - read how
+        ////protected void RegisterTemplate<TRequest, TResponse>()
+        //protected void RegisterTemplate<T>()
+        //{
+        //    //_templater.AddTemplate<T>();
+        //    //_bus.RegisterAsyncQueueHandler<T>(async msg => await SendCreatedTemplateAsync(msg));
+
+        //    // ---
+        //    //_templater.AddTemplate<T>();
+        //    //_bus.RegisterCallHandler<TRequest, TResponse>(
+        //    // ---
+
+
+        //    _templater.AddTemplate<T>();
+        //}
+
+        // TODO: make private
+        //protected void RegisterRpc<T>(Type requestType, Type responseType)
+        // protected void RegisterRpc<TRequest, TResponse, T>(TRequest request)
+        protected void RegisterRpc<TRequest, TResponse, T>()
+            where TResponse : ITemplateResponse<T>, new()
+            where TRequest : ITemplateRequest<T>, new()
+        {
+            //var requestInstance = Activator.CreateInstance(requestType) as ITemplateRequest<T>;
+            //var responseInstance = Activator.CreateInstance(responseType) as ITemplateResponse<T>;
+
+            //_bus.RegisterCallHandler<ITemplateRequest<T>, ITemplateResponse<T>>(TmpHandler(requestInstance));
+            //_bus.RegisterCallHandler<TRequest, TResponse>(Tmp);
+
+
+            _bus.RegisterCallHandler<TRequest, TResponse>(TmpHandler<TRequest, TResponse, T>);
+            //_bus.RegisterCallHandler<TRequest, TResponse>(TmpHandler<ITemplateRequest<T>, ITemplateResponse<T>, T>(request);
+        }
+
+        private TResponse TmpHandler<TRequest, TResponse, T>(TRequest request)
+            where TResponse : ITemplateResponse<T>, new()
+            where TRequest : ITemplateRequest<T>
+        {
+            var response = new TResponse();
+            response.Text = _templater.CreateTemplateBody(request.Template);
+
+            return response;
+        }
 
         private async Task SendCreatedTemplateAsync(ITemplate message)
         {

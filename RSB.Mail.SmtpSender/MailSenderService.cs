@@ -22,6 +22,7 @@ namespace RSB.Mail.SmtpSender
             Logger.Info("Starting {0}", nameof(MailSenderService));
 
             _mailManager = _container.GetInstance<MailManager>();
+            _mailManager.Start();
         }
 
         public void Stop()

@@ -2,7 +2,7 @@
 
 namespace RSB.Mail.SmtpSender.Models
 {
-    public class MailProperties
+    public class SendMailMessage
     {
         public string FromMail { get; set; }
         public string FromName { get; set; }

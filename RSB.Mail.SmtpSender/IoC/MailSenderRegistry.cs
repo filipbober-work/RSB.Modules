@@ -24,10 +24,13 @@ namespace RSB.Mail.SmtpSender.IoC
                 }
             ))).Singleton();
 
-            For<IMailSender>().Use<SmtpMailSender>();            
+            For<IMailSender>().Use<SmtpMailSender>();
 
             For<MailManagerSettings>().Use(
-                new MailManagerSettings()
+                new MailManagerSettings
+                {
+                    InstanceName = Properties.Settings.Default.InstanceName
+                }
             );
 
         For<MailSenderSettings>().Use(

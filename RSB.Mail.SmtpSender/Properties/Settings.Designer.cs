@@ -94,5 +94,17 @@ namespace RSB.Mail.SmtpSender.Properties {
                 return ((int)(this["MailPort"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DefaultSmtp")]
+        public string InstanceName {
+            get {
+                return ((string)(this["InstanceName"]));
+            }
+            set {
+                this["InstanceName"] = value;
+            }
+        }
     }
 }

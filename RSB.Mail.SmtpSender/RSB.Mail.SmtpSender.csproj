@@ -93,8 +93,7 @@
     <Compile Include="MailManagerSettings.cs" />
     <Compile Include="MailSenderService.cs" />
     <Compile Include="MailSenderSettings.cs" />
-    <Compile Include="Models\IMailMessage.cs" />
-    <Compile Include="Models\MailProperties.cs" />
+    <Compile Include="Models\SendMailMessage.cs" />
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using NLog;
 using RazorEngine;
@@ -26,15 +27,16 @@ namespace RSB.Mail.Templater
             RazorEngineService.Create(config);
         }
 
-        public void AddTemplate<T>() where T : Models.ITemplate
+        public void AddTemplate<T>() //where T : Models.ITemplate
         {
             AddTemplateAndCompile<T>(_settings.TemplatesPath);
         }
 
-        public async Task SendCreatedTemplateAsync(Models.ITemplate template)
+        //public async Task SendCreatedTemplateAsync(Models.ITemplate template)
+        public async Task SendCreatedTemplateAsync(object contract)
         {
             Logger.Debug("Creating template body");
-            string body = CreateTemplateBody(template);
+            string body = CreateTemplateBody(contract);
             Logger.Debug("Sending template");
             //await SendSmtpEmailAsync(message);
             await SendTemplateViaRabbit(body);
@@ -45,6 +47,8 @@ namespace RSB.Mail.Templater
         public async Task SendTemplateViaRabbit(string body)
         {
             // TODO: Send template via Rabbit
+
+            //var
         }
 
         //public async Task SendEmailAsync(IMailMessage message)
@@ -82,13 +86,22 @@ namespace RSB.Mail.Templater
 
         //}
 
-        private static string CreateTemplateBody<T>(T template) where T : Models.ITemplate
+        ////private static string CreateTemplateBody<T>(T template) where T : Models.ITemplate
+        //public string CreateTemplateBody<T>(T template) //where T : Models.ITemplate
+        //{
+        //    var typeName = template.GetType().Name;
+        //    return Engine.Razor.RunCompile(typeName, template.GetType(), template);
+        //}
+
+        //private static string CreateTemplateBody<T>(T template) where T : Models.ITemplate
+        public string CreateTemplateBody<T>(T contract) //where T : Models.ITemplate
         {
-            var typeName = template.GetType().Name;
-            return Engine.Razor.RunCompile(typeName, template.GetType(), template);
+            //var typeName = template.GetType().Name;
+            var typeName = contract.GetType().Name;
+            return Engine.Razor.RunCompile(typeName, contract.GetType(), contract);
         }
 
-        private static void AddTemplateAndCompile<T>(string templatesPath) where T : Models.ITemplate
+        private static void AddTemplateAndCompile<T>(string templatesPath) //where T : Models.ITemplate
         {
             var typeName = typeof(T).Name;
             var templatePath = Path.Combine(templatesPath, typeName) + ".cshtml";

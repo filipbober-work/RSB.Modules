@@ -30,7 +30,7 @@ namespace RSB.Mail.Templater
             if (_isInitialized)
                 return;
 
-            InitializeTemplates();
+            InitializeTemplates();            
 
             _isInitialized = true;
         }
@@ -71,7 +71,7 @@ namespace RSB.Mail.Templater
 
             if (implementedResponses.Count < 1)
             {
-                Logger.Warn("No implementations of IMailMessage found in the given assembly");
+                Logger.Warn("No implementations of ITemplateResponse found in the given assembly");
             }
 
             var method = typeof(TemplateManager).GetMethod(nameof(RegisterTemplate), BindingFlags.Instance | BindingFlags.NonPublic);
@@ -80,13 +80,15 @@ namespace RSB.Mail.Templater
             {
                 // ---
                 // Find matching request
-                var tmp = GetContractClassType(templatesAssembly, response);
+                var contractType = GetContractClassType(templatesAssembly, response);
                 // ---
 
-                var generic = method.MakeGenericMethod(response);
+                //var generic = method.MakeGenericMethod(response);
+
+
+
+                var generic = method.MakeGenericMethod(contractType);
                 generic.Invoke(this, null);
-
-
             }
         }
 
@@ -120,7 +122,8 @@ namespace RSB.Mail.Templater
 
         //protected void RegisterTemplate<T>() where T : ITemplate, new()
         // TODO: Make private - read how
-        protected void RegisterTemplate<TRequest, TResponse>()
+        //protected void RegisterTemplate<TRequest, TResponse>()
+        protected void RegisterTemplate<T>()
         {
             //_templater.AddTemplate<T>();
             //_bus.RegisterAsyncQueueHandler<T>(async msg => await SendCreatedTemplateAsync(msg));
@@ -130,6 +133,8 @@ namespace RSB.Mail.Templater
             //_bus.RegisterCallHandler<TRequest, TResponse>(
             // ---
 
+
+            _templater.AddTemplate<T>();
         }
 
         private async Task SendCreatedTemplateAsync(ITemplate message)

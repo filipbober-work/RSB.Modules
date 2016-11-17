@@ -99,7 +99,7 @@ namespace RSB.Templater
             where TResponse : ITemplateResponse<T>, new()
             where TRequest : ITemplateRequest<T>, new()
         {
-            _bus.RegisterCallHandler<TRequest, TResponse>(TemplateResponseHandler<TRequest, TResponse, T>);
+            _bus.RegisterCallHandler<TRequest, TResponse>(TemplateResponseHandler<TRequest, TResponse, T>, _settings.RoutingKey);
 
             Logger.Debug("Registered RPC for " + typeof(T));
         }

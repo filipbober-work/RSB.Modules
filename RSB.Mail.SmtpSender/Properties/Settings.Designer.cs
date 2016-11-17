@@ -70,7 +70,7 @@ namespace RSB.Mail.SmtpSender.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sampleuser.example@mail.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("example@mail.com")]
         public string MailUsername {
             get {
                 return ((string)(this["MailUsername"]));
@@ -79,7 +79,7 @@ namespace RSB.Mail.SmtpSender.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("samplePassword")]
+        [global::System.Configuration.DefaultSettingValueAttribute("example")]
         public string MailPassword {
             get {
                 return ((string)(this["MailPassword"]));
@@ -98,12 +98,12 @@ namespace RSB.Mail.SmtpSender.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("DefaultSmtp")]
-        public string InstanceName {
+        public string RoutingKey {
             get {
-                return ((string)(this["InstanceName"]));
+                return ((string)(this["RoutingKey"]));
             }
             set {
-                this["InstanceName"] = value;
+                this["RoutingKey"] = value;
             }
         }
     }

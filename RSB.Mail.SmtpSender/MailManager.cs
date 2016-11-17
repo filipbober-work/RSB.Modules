@@ -23,7 +23,7 @@ namespace RSB.Mail.SmtpSender
 
         public void Start()
         {
-            _bus.RegisterAsyncQueueHandler<SendMailMessage>(HandleMailMessageAsync, _settings.InstanceName);
+            _bus.RegisterAsyncQueueHandler<SendMailMessage>(HandleMailMessageAsync, _settings.RabbitRoutingKey);
         }
 
         private async Task HandleMailMessageAsync(SendMailMessage message)

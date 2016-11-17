@@ -27,7 +27,8 @@ namespace RSB.Templater.IoC
             For<TemplateManagerSettings>().Use(
                 new TemplateManagerSettings
                 {
-                    TemplatesDllPath = Properties.Settings.Default.TemplatesDllPath
+                    TemplatesDllPath = Properties.Settings.Default.TemplatesDllPath,
+                    RoutingKey = Properties.Settings.Default.RoutingKey
                 }
             );
 

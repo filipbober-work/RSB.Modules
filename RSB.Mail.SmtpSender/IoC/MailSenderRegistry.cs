@@ -29,7 +29,7 @@ namespace RSB.Mail.SmtpSender.IoC
             For<MailManagerSettings>().Use(
                 new MailManagerSettings
                 {
-                    InstanceName = Properties.Settings.Default.InstanceName
+                    RabbitRoutingKey = Properties.Settings.Default.RoutingKey
                 }
             );
 

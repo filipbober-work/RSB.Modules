@@ -2,6 +2,6 @@
 {
     public class MailManagerSettings
     {
-        public string InstanceName { get; set; }
+        public string RabbitRoutingKey { get; set; }
     }
 }

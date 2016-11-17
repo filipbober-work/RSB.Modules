@@ -25,15 +25,6 @@ namespace RSB.Templater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
-        public string InstanceName {
-            get {
-                return ((string)(this["InstanceName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
         public string RabbitHostname {
             get {
@@ -74,6 +65,18 @@ namespace RSB.Templater.Properties {
         public string TemplatesDllPath {
             get {
                 return ((string)(this["TemplatesDllPath"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DefaultTemplater")]
+        public string RoutingKey {
+            get {
+                return ((string)(this["RoutingKey"]));
+            }
+            set {
+                this["RoutingKey"] = value;
             }
         }
     }

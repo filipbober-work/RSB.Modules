@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Mail.Contracts", "RSB.Modules.Mail.Contracts\RSB.Modules.Mail.Contracts.csproj", "{E311871E-8E84-4755-82BC-CE739D8AB49D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Templater", "RSB.Templater\RSB.Templater.csproj", "{F34CEB80-567A-48DB-8967-A5E205A06E79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Mail.SmtpSender", "RSB.Modules.Mail.SmtpSender\RSB.Modules.Mail.SmtpSender.csproj", "{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Mail.SmtpSender", "RSB.Mail.SmtpSender\RSB.Mail.SmtpSender.csproj", "{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Templater", "RSB.Modules.Templater\RSB.Modules.Templater.csproj", "{F34CEB80-567A-48DB-8967-A5E205A06E79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{E311871E-8E84-4755-82BC-CE739D8AB49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E311871E-8E84-4755-82BC-CE739D8AB49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E311871E-8E84-4755-82BC-CE739D8AB49D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3631ADF1-CCED-4D16-AD12-5BFD24D342D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F34CEB80-567A-48DB-8967-A5E205A06E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

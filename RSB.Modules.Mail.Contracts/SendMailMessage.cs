@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RSB.Modules.Mail.SmtpSender.Models
+namespace RSB.Modules.Mail.Contracts
 {
     public class SendMailMessage
     {

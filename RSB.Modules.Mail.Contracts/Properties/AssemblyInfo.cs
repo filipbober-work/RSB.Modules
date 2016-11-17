@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RSB.Modules.MailSender.Contracts")]
+[assembly: AssemblyTitle("RSB.Modules.Mail.Contracts")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RSB.Modules.MailSender.Contracts")]
+[assembly: AssemblyProduct("RSB.Modules.Mail.Contracts")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fd8a9a2f-330c-469e-897c-c232122e79df")]
+[assembly: Guid("6bb3410e-bfc4-4d6f-b0e6-72383daa1fb5")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using RSB.Modules.Mail.SmtpSender.Models;
+using RSB.Modules.Mail.Contracts;
 
 namespace RSB.Modules.Mail.SmtpSender
 {

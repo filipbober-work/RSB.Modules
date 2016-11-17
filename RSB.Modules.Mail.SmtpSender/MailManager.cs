@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NLog;
 using RSB.Interfaces;
-using RSB.Modules.Mail.SmtpSender.Models;
+using RSB.Modules.Mail.Contracts;
 
 namespace RSB.Modules.Mail.SmtpSender
 {

@@ -31,14 +31,19 @@ Application receives messages via Rabbit and them as SMTP emails.
  
  For the message to be processed it must be in following format:
  ```cs
-public class SendMailMessage
+namespace RSB.Modules.Mail.Contracts
 {
-    public string FromMail { get; set; }
-    public string FromName { get; set; }
-    public List<Recipient> Recipients { get; set; }
-    public string Subject { get; set; }
-    public string Body { get; set; }
- 
+    public class SendMailMessage
+    {
+        public string FromMail { get; set; }
+        public string FromName { get; set; }
+        public List<Recipient> Recipients { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+    }
+}
  ```
+ 
+ Reference RSB.Modules.Mail.Contracts in you project.
 
 

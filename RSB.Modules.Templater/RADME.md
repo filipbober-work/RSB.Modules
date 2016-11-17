@@ -15,8 +15,8 @@ interfaces.
 * Create Models and Template folders in the project.
 * Add three classes to the Models folder:
 	* Contract class that represents Rabbit contract.
-	* Request class which will be used as RSB RPC request. This class must implement ITemplateRequest<ContractName> interface.
-	* Response class which will be used as RSB RPC response. This class must implement ITemplateResponse<ContractName> interface.
+	* Request class which will be used as RSB RPC request. This class must implement ITemplateRequest<ContractName> interface from RSB.Modules.Templater.Contracts library.
+	* Response class which will be used as RSB RPC response. This class must implement ITemplateResponse<ContractName> interface from RSB.Modules.Templater.Contracts library.
 * Add template to Templates folder. This file must have the same name as the contract name (but with ".cshtml" extension).
 	* Ensure that template file "Copy to Output Directory" property is set to "Copy if newer".
 * Combile library project.
@@ -37,7 +37,7 @@ public class UserRegisteredTemplate
 
 * Request class is prefixed with "Fill" and postfixed with "Request"
 ```cs
-class FillUserRegisteredTemplateRequest : ITemplateRequest<UserRegisteredTemplate>
+class FillUserRegisteredTemplateRequest : RSB.Modules.Templater.Contracts.ITemplateRequest<UserRegisteredTemplate>
 {
     public UserRegisteredTemplate Template { get; set; }
 }
@@ -45,7 +45,7 @@ class FillUserRegisteredTemplateRequest : ITemplateRequest<UserRegisteredTemplat
 
 * Response class is prefixed with "Fill" and postfixed with "Response"
 ```cs
-class FillUserRegisteredTemplateResponse : ITemplateResponse<UserRegisteredTemplate>
+class FillUserRegisteredTemplateResponse : RSB.Modules.Templater.Contracts.ITemplateResponse<UserRegisteredTemplate>
 {
     public string Text { get; set; }
 }

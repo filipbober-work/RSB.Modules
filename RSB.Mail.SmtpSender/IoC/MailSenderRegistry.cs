@@ -40,7 +40,8 @@ namespace RSB.Mail.SmtpSender.IoC
                     Address = Properties.Settings.Default.MailAddress,
                     Username = Properties.Settings.Default.MailUsername,
                     Password = Properties.Settings.Default.MailPassword,
-                    Port = Properties.Settings.Default.MailPort
+                    Port = Properties.Settings.Default.MailPort,
+                    UseSsl = Properties.Settings.Default.UseSsl
                 }
             );
 

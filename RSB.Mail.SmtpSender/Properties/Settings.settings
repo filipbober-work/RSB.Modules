@@ -29,5 +29,8 @@
     <Setting Name="RoutingKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">DefaultSmtp</Value>
     </Setting>
+    <Setting Name="UseSsl" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

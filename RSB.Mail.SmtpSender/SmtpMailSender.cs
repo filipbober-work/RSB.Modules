@@ -37,10 +37,11 @@ namespace RSB.Mail.SmtpSender
 
                 using (var client = new SmtpClient())
                 {
-                    await client.ConnectAsync(_settings.Hostname, _settings.Port);
+                    await client.ConnectAsync(_settings.Hostname, _settings.Port, _settings.UseSsl);
                     await client.AuthenticateAsync(_settings.Username, _settings.Password);
                     await client.SendAsync(message);
                     await client.DisconnectAsync(true);
+
                 }
 
                 Logger.Debug("Email sent");

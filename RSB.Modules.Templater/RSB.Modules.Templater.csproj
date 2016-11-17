@@ -97,8 +97,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ITemplateRequest.cs" />
-    <Compile Include="Models\ITemplateResponse.cs" />
     <Compile Include="TemplateManager.cs" />
     <Compile Include="TemplateManagerSettings.cs" />
     <Compile Include="Templater.cs" />
@@ -130,7 +128,12 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RSB.Modules.Templater.Contracts\RSB.Modules.Templater.Contracts.csproj">
+      <Project>{768C5F8A-EB53-48D5-9E55-AB1201D86DB6}</Project>
+      <Name>RSB.Modules.Templater.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

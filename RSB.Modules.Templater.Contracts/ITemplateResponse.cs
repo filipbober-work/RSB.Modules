@@ -1,4 +1,4 @@
-﻿namespace RSB.Modules.Templater.Models
+﻿namespace RSB.Modules.Templater.Contracts
 {
     // ReSharper disable once UnusedTypeParameter
     public interface ITemplateResponse<T>

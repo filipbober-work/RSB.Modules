@@ -1,4 +1,4 @@
-﻿namespace RSB.Modules.Templater.Models
+﻿namespace RSB.Modules.Templater.Contracts
 {
     public interface ITemplateRequest<T>
     {

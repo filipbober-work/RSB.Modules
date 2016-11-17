@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using NLog;
 using RSB.Interfaces;
-using RSB.Modules.Templater.Models;
+using RSB.Modules.Templater.Contracts;
 
 namespace RSB.Modules.Templater
 {

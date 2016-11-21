@@ -10,7 +10,7 @@ namespace RSB.Modules.Templater
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        static void Main()
+        private static void Main()
         {
             HostFactory.Run(x =>
             {

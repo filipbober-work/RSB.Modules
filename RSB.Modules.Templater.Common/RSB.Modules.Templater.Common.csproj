@@ -7,8 +7,8 @@
     <ProjectGuid>{768C5F8A-EB53-48D5-9E55-AB1201D86DB6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RSB.Modules.Templater.Contracts</RootNamespace>
-    <AssemblyName>RSB.Modules.Templater.Contracts</AssemblyName>
+    <RootNamespace>RSB.Modules.Templater.Common</RootNamespace>
+    <AssemblyName>RSB.Modules.Templater.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=3.6.1.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.3.6.1\lib\net45\RabbitMQ.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RSB, Version=0.9.6065.20911, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RSB.Transports.RabbitMQ.0.1.6065.20911\lib\net45\RSB.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RSB.Transports.RabbitMQ, Version=0.1.6065.20911, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RSB.Transports.RabbitMQ.0.1.6065.20911\lib\net45\RSB.Transports.RabbitMQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,9 +60,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITemplateRequest.cs" />
-    <Compile Include="ITemplateResponse.cs" />
+    <Compile Include="Contracts\ITemplateRequest.cs" />
+    <Compile Include="Contracts\ITemplateResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ReflectionUtils.cs" />
+    <Compile Include="Contracts\TemplateAttribute.cs" />
+    <Compile Include="TemplaterService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

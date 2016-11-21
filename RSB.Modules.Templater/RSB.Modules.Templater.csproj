@@ -129,9 +129,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RSB.Modules.Templater.Contracts\RSB.Modules.Templater.Contracts.csproj">
+    <ProjectReference Include="..\RSB.Modules.Templater.Common\RSB.Modules.Templater.Common.csproj">
       <Project>{768C5F8A-EB53-48D5-9E55-AB1201D86DB6}</Project>
-      <Name>RSB.Modules.Templater.Contracts</Name>
+      <Name>RSB.Modules.Templater.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Templater", "RS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Mail.Contracts", "RSB.Modules.Mail.Contracts\RSB.Modules.Mail.Contracts.csproj", "{6BB3410E-BFC4-4D6F-B0E6-72383DAA1FB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Templater.Contracts", "RSB.Modules.Templater.Contracts\RSB.Modules.Templater.Contracts.csproj", "{768C5F8A-EB53-48D5-9E55-AB1201D86DB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSB.Modules.Templater.Common", "RSB.Modules.Templater.Common\RSB.Modules.Templater.Common.csproj", "{768C5F8A-EB53-48D5-9E55-AB1201D86DB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

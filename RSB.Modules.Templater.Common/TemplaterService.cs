@@ -6,7 +6,7 @@ using RSB.Modules.Templater.Common.Utils;
 
 namespace RSB.Modules.Templater.Common
 {
-    public class TemplaterService
+    public class TemplaterService : ITemplaterService
     {
         private readonly IBus _bus;
         private readonly string _routingKey;

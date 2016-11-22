@@ -8,6 +8,28 @@ namespace RSB.Modules.Templater.Common.Utils
 {
     public class ReflectionUtils
     {
+        public static string GetRequestName<T>()
+        {
+            return "Fill" + typeof(T).Name + "Request";
+        }
+
+        public static string GetResponseName<T>()
+        {
+            return "Fill" + typeof(T).Name + "Response";
+        }
+
+        public static ITemplateRequest<T> InstantiateCachedRequest<T>(Type type) where T : new()
+        {
+            var requestInstance = Activator.CreateInstance(type);
+            var custDataAsTemplate = requestInstance as ITemplateRequest<T>;
+
+            if (custDataAsTemplate == null)
+                return null;
+
+            custDataAsTemplate.Variables = new T();
+            return custDataAsTemplate;
+        }
+
         public static ITemplateRequest<T> InstantiateTemplateRequest<T>() where T : new()
         {
             var requestType = BuildDynamicRequestType<T>();
@@ -39,11 +61,12 @@ namespace RSB.Modules.Templater.Common.Utils
             };
 
             var assemblyBuilder = appDomain.DefineDynamicAssembly(assemblyName,
-                                                            AssemblyBuilderAccess.RunAndSave);
-            var moduleBuilder =
-                assemblyBuilder.DefineDynamicModule(assemblyName.Name, assemblyName.Name + ".dll");
+                                                AssemblyBuilderAccess.Run);
 
-            var typeBuilder = moduleBuilder.DefineType("FillUserRegisteredTemplateRequest",
+            var moduleBuilder =
+                assemblyBuilder.DefineDynamicModule(assemblyName.Name);
+
+            var typeBuilder = moduleBuilder.DefineType("Fill" + typeof(T).Name + "Request",
                                                             TypeAttributes.Public);
 
             var variablesBldr = typeBuilder.DefineField("_variables",
@@ -104,11 +127,11 @@ namespace RSB.Modules.Templater.Common.Utils
             };
 
             var assemblyBuilder = appDomain.DefineDynamicAssembly(assemblyName,
-                                                            AssemblyBuilderAccess.RunAndSave);
+                                                AssemblyBuilderAccess.Run);
             var moduleBuilder =
-                assemblyBuilder.DefineDynamicModule(assemblyName.Name, assemblyName.Name + ".dll");
+                assemblyBuilder.DefineDynamicModule(assemblyName.Name);
 
-            var typeBuilder = moduleBuilder.DefineType("FillUserRegisteredTemplateResponse",
+            var typeBuilder = moduleBuilder.DefineType("Fill" + typeof(T).Name + "Response",
                                                             TypeAttributes.Public);
 
             var textBldr = typeBuilder.DefineField("_text",

@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using RSB.Interfaces;
 using RSB.Modules.Templater.Common.Contracts;
@@ -11,6 +13,9 @@ namespace RSB.Modules.Templater.Common
         private readonly IBus _bus;
         private readonly string _routingKey;
 
+        private readonly Dictionary<string, Type> _responseTypes = new Dictionary<string, Type>();
+        private readonly Dictionary<string, Type> _requestTypes = new Dictionary<string, Type>();
+
         public TemplaterService(IBus bus, string routingKey)
         {
             _bus = bus;
@@ -19,13 +24,33 @@ namespace RSB.Modules.Templater.Common
 
         public async Task<string> FillTemplateAsync<T>(T contract) where T : new()
         {
-            var request = ReflectionUtils.InstantiateTemplateRequest<T>();
+            var requestKey = ReflectionUtils.GetRequestName<T>();
+            var responseKey = ReflectionUtils.GetRequestName<T>();
+
+            Type requestType;
+            ITemplateRequest<T> request;
+            if (_requestTypes.TryGetValue(requestKey, out requestType))
+            {
+                request = ReflectionUtils.InstantiateCachedRequest<T>(requestType);
+            }
+            else
+            {
+                request = ReflectionUtils.InstantiateTemplateRequest<T>();
+                requestType = request.GetType();
+                _requestTypes.Add(requestKey, requestType);
+            }
             request.Variables = contract;
 
-            var responseType = ReflectionUtils.BuildDynamicResponseType<T>();
+            Type responseType;
+            if (!_responseTypes.TryGetValue(responseKey, out responseType))
+            {
+                responseType = ReflectionUtils.BuildDynamicResponseType<T>();
+                _responseTypes.Add(responseKey, responseType);
+            }
+
 
             var callRpcMethod = typeof(TemplaterService).GetMethod(nameof(CallRpc), BindingFlags.Instance | BindingFlags.NonPublic);
-            var callRpcGeneric = callRpcMethod.MakeGenericMethod(request.GetType(), responseType, contract.GetType());
+            var callRpcGeneric = callRpcMethod.MakeGenericMethod(requestType, responseType, contract.GetType());
             var task = (Task<ITemplateResponse<T>>)callRpcGeneric.Invoke(this, new object[] { request });
 
             var response = await task;

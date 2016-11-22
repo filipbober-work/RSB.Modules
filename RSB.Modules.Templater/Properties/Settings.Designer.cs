@@ -70,7 +70,7 @@ namespace RSB.Modules.Templater.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DefaultTemplater")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
         public string RoutingKey {
             get {
                 return ((string)(this["RoutingKey"]));

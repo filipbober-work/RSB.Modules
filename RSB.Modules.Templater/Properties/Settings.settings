@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RSB.Templater.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RSB.Modules.Templater.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="RabbitHostname" Type="System.String" Scope="Application">
@@ -18,7 +18,7 @@
       <Value Profile="(Default)">Templates.dll</Value>
     </Setting>
     <Setting Name="RoutingKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">DefaultTemplater</Value>
+      <Value Profile="(Default)">Default</Value>
     </Setting>
   </Settings>
 </SettingsFile>

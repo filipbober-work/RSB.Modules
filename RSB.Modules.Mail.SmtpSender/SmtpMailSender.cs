@@ -30,7 +30,7 @@ namespace RSB.Modules.Mail.SmtpSender
 
                 var builder = new BodyBuilder
                 {
-                    HtmlBody = string.Format(mail.Body)
+                    HtmlBody = mail.Body
                 };
 
                 message.Body = builder.ToMessageBody();

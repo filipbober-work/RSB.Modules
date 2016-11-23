@@ -8,14 +8,14 @@ namespace RSB.Modules.Templater.Common.Utils
 {
     public class ReflectionUtils
     {
-        public static string GetRequestName<T>()
+        public static string GetRequestName(Type contractType)
         {
-            return "Fill" + typeof(T).Name + "Request";
+            return "Fill" + contractType.Name + "Request";
         }
 
-        public static string GetResponseName<T>()
+        public static string GetResponseName(Type contractType)
         {
-            return "Fill" + typeof(T).Name + "Response";
+            return "Fill" + contractType.Name + "Response";
         }
 
         public static ITemplateRequest<T> InstantiateCachedRequest<T>(Type type) where T : new()

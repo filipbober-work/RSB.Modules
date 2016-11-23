@@ -24,8 +24,8 @@ namespace RSB.Modules.Templater.Common
 
         public async Task<string> FillTemplateAsync<T>(T contract) where T : new()
         {
-            var requestKey = ReflectionUtils.GetRequestName<T>();
-            var responseKey = ReflectionUtils.GetRequestName<T>();
+            var requestKey = ReflectionUtils.GetRequestName(contract.GetType());
+            var responseKey = ReflectionUtils.GetResponseName(contract.GetType());
 
             Type requestType;
             ITemplateRequest<T> request;

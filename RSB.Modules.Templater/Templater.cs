@@ -22,7 +22,7 @@ namespace RSB.Modules.Templater
                 CachingProvider = new DefaultCachingProvider(t => { }),
             };
 
-            RazorEngineService.Create(config);
+            Engine.Razor = RazorEngineService.Create(config);
         }
 
         public void AddTemplate<T>()

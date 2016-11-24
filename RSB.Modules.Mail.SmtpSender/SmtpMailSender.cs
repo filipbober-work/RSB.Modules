@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
 using NLog;
@@ -28,10 +29,23 @@ namespace RSB.Modules.Mail.SmtpSender
                 message.To.Add(new MailboxAddress(recipient.ToName, recipient.ToMail));
                 message.Subject = mail.Subject;
 
-                var builder = new BodyBuilder
+                var builder = new BodyBuilder();
+                var regex = new Regex(@"src=""cid:(?<FirstNumber>[^""]*)");
+                try
                 {
-                    HtmlBody = mail.Body
-                };
+                    foreach (Match match in regex.Matches(mail.Body))
+                    {
+                        var pathId = match.Groups["FirstNumber"].Value;
+                        var image = builder.LinkedResources.Add(pathId);
+                        image.ContentId = pathId;
+                    }
+                }
+                catch (System.IO.IOException ex)
+                {
+                    Logger.Warn(ex, "Error while parsing image");
+                }
+
+                builder.HtmlBody = mail.Body;
 
                 message.Body = builder.ToMessageBody();
 
@@ -41,12 +55,12 @@ namespace RSB.Modules.Mail.SmtpSender
                     await client.AuthenticateAsync(_settings.Username, _settings.Password);
                     await client.SendAsync(message);
                     await client.DisconnectAsync(true);
-
                 }
 
                 Logger.Debug("Email sent");
             }
 
         }
+
     }
 }

@@ -21,7 +21,7 @@
       <Value Profile="(Default)">example@mail.com</Value>
     </Setting>
     <Setting Name="MailPassword" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Demo</Value>
+      <Value Profile="(Default)">demo</Value>
     </Setting>
     <Setting Name="MailPort" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">587</Value>

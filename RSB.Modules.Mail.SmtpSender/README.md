@@ -66,4 +66,28 @@ namespace RSB.Modules.Mail.Contracts
 
  Reference RSB.Modules.Mail.Contracts in you project.
 
+ # Attaching images
+
+ MailSender is searching every mail message body for particular expressions that indicate there are images to
+ be attached. There are two supported ways to include and image, both require html body.
+
+ ## Attach image from file
+
+ Images may be attached from file. For this method to work, image must be marked with cid and must be available for the
+ MailSender to read. Following code will tell MailSender to attach image file named img.png in img folder.
+
+ ```html
+ <img src="cid:img/img.png" alt='' data-default="placeholder" data-max-width="560" />
+ ```
+
+ ## Attach image encoded as Base64
+
+ Another way to include images is to encode with Base64 and store in message body directly. It makes message body much
+ larger but images are not required to be available to the mail sender directly. This method also requires cid to be
+ specified.
+
+ ```html
+ <img alt="Sample image" src="cid:anyWordCharacters,data:image/gif;base64,R0lGODlhPQBEAPeoAJosM//AwO/AwHVYZ/z595k..." data-default="placeholder" data-max-width="560" />
+ ```
+
 

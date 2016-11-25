@@ -15,7 +15,7 @@ namespace RSB.Modules.Templater
             HostFactory.Run(x =>
             {
                 x.SetServiceName("RSB.Modules.Templater");
-                x.SetDisplayName("RSB.Modules.SmtpSender");
+                x.SetDisplayName("RSB.Modules.Templater");
                 x.SetDescription("This is templater service communicating by RSB.");
 
                 x.StartAutomatically();

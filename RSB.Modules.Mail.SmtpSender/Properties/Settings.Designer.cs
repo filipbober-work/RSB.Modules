@@ -79,7 +79,7 @@ namespace RSB.Modules.Mail.SmtpSender.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("demo")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Demo")]
         public string MailPassword {
             get {
                 return ((string)(this["MailPassword"]));
